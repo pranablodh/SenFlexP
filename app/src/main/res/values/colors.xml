@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#56CCF2</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name ="splashMainText">#FFFFFF</color>
+    <color name="splashMutedText">#9FA4CA</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="semiTransparentColor">#5000A597</color>
+    <color name="lightGreen">#00A597</color>
+    <color name="lightBlue">#2F80ED</color>
+    <color name="red">#FF0000</color>
+</resources>

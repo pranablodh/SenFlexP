@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.new_test"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:background="@drawable/login_header"
+        android:orientation="vertical"
+        android:gravity="start">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/register"
+            android:gravity="center"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="normal"
+            android:layout_marginTop="@dimen/_35sdp"
+            android:layout_marginStart="@dimen/_10sdp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/start_test"
+            android:gravity="center"
+            android:textSize="@dimen/_25sdp"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_10sdp"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_400sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_15sdp"
+            app:cardElevation="@dimen/_5sdp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_30sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_300sdp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_60sdp"
+                android:layout_marginBottom="@dimen/_1sdp">
+
+                <com.amar.library.ui.StickyScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            app:endIconMode="clear_text">
+
+                            <EditText
+                                android:id="@+id/name"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="@string/name"
+                                android:maxLines="1"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:inputType="text"
+                                tools:ignore="TextFields"
+                                android:text="Demo"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            app:endIconMode="clear_text">
+
+                            <EditText
+                                android:id="@+id/test_id"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="@string/test_id"
+                                android:maxLines="1"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:inputType="text"
+                                tools:ignore="TextFields"
+                                android:text="Demo"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            app:endIconMode="clear_text">
+
+                            <EditText
+                                android:id="@+id/address"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="@string/address"
+                                android:maxLines="1"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:inputType="text"
+                                tools:ignore="TextFields"
+                                android:text="Demo"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            app:endIconMode="clear_text">
+
+                            <EditText
+                                android:id="@+id/dob"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="@string/date_of_birth"
+                                android:maxLines="1"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:inputType="date"
+                                tools:ignore="TextFields"
+                                android:focusable="false"
+                                android:text="06/08/1993"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:background="@drawable/border"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:ignore="UselessParent"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp">
+                            <Spinner
+                                android:id="@+id/sex"
+                                android:layout_width="@dimen/_275sdp"
+                                android:layout_height="@dimen/_35sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:entries="@array/gender" />
+                    </LinearLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            app:endIconMode="clear_text">
+
+                            <EditText
+                                android:id="@+id/mobile"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="@string/mobile_number"
+                                android:maxLines="1"
+                                android:maxLength="10"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:inputType="number"
+                                tools:ignore="TextFields"
+                                android:text="9804710805"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            app:endIconMode="clear_text">
+
+                            <EditText
+                                android:id="@+id/email"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="@string/email_id"
+                                android:maxLines="1"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:inputType="textEmailAddress"
+                                tools:ignore="TextFields"
+                                android:text="a@b.com"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/next"
+                            android:layout_width="@dimen/_130sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:background="@drawable/button"
+                            android:text="@string/next"
+                            android:textSize="@dimen/_12sdp"
+                            android:textColor="@color/white"
+                            android:textAllCaps="false"
+                            android:textStyle="bold"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"/>
+
+                    </LinearLayout>
+
+                </com.amar.library.ui.StickyScrollView>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:elevation="@dimen/_10sdp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:src="@drawable/avatar"
+                android:scaleType="centerCrop"
+                app:civ_border_width="@dimen/_3sdp"
+                app:civ_border_color="@color/lightBlue"/>
+
+            <ImageView
+                android:id="@+id/camera"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_30sdp"
+                tools:ignore="ContentDescription"
+                android:background="@drawable/camera"
+                android:scaleType="centerCrop"
+                android:layout_gravity="bottom|end"
+                android:layout_marginTop="@dimen/_65sdp"/>
+
+        </FrameLayout>
+
+    </FrameLayout>
+
+</LinearLayout>
