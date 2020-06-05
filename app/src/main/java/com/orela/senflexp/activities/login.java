@@ -15,13 +15,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -34,7 +34,15 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.orela.senflexp.R;
 import com.orela.senflexp.inputValidator.inputValidator;
+import com.orela.senflexp.network.api;
+import com.orela.senflexp.network.networkListener;
+import com.orela.senflexp.network.networkManager;
 import com.orela.senflexp.sharedPreference.sharedPreference;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 public class login extends AppCompatActivity
@@ -45,9 +53,6 @@ public class login extends AppCompatActivity
     private CheckBox remember_me;
     private TextView forget_password;
 
-    //Progress Dialog Box
-    private Dialog progressDialog;
-
     //Variables for Permission
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     private static final int INITIAL_REQUEST = 1337;
@@ -57,11 +62,16 @@ public class login extends AppCompatActivity
             android.Manifest.permission.CAMERA,
             android.Manifest.permission.READ_PHONE_STATE};
 
+    //Dialog Box Element
+    private Dialog progressDialog;
+    private TextView dialog_text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        networkManager.getInstance(this);
 
         //Hiding Action Bar
         ActionBar actionBar = getSupportActionBar();
@@ -74,9 +84,6 @@ public class login extends AppCompatActivity
         password = (EditText) findViewById(R.id.password);
         remember_me = (CheckBox) findViewById(R.id.remember_me);
         forget_password = (TextView) findViewById(R.id.forget_password);
-
-        //Dialog Initializer
-        progressDialog = new Dialog(login.this);
 
         update_edit_text();
 
@@ -104,29 +111,8 @@ public class login extends AppCompatActivity
                     email_mobile.setError(null);
                     password.setError(null);
                 }
-
-                if(remember_me.isChecked())
-                {
-                    sharedPreference.deleteCredentials(login.this);
-                    sharedPreference.storeCredentials(email_mobile.getText().toString(), password.getText().toString(), login.this);
-                }
-
-                else
-                {
-                    sharedPreference.deleteCredentials(login.this);
-                }
-
                 showProgressDialog();
-
-                new Handler().postDelayed(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        progressDialog.dismiss();
-                        go_to_landing_page();
-                    }
-                },6000);
+                httpRequest();
             }
         });
 
@@ -275,12 +261,109 @@ public class login extends AppCompatActivity
         });
     }
 
-    //Show Progress Dialog
     private void showProgressDialog()
     {
-        progressDialog.setCancelable(false);
+        progressDialog = new Dialog(login.this);
         progressDialog.setContentView(R.layout.dialog_loading);
+        dialog_text = (TextView) progressDialog.findViewById(R.id.dialog_text);
+        dialog_text.setText(R.string.secure_login_text);
+        progressDialog.setCancelable(false);
         Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         progressDialog.show();
+    }
+
+    //Http Request Handler
+    private void httpRequest()
+    {
+        JSONObject object = new JSONObject();
+        try
+        {
+            object.put("user", email_mobile.getText().toString());
+            object.put("password", password.getText().toString());
+        }
+
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        networkManager.getInstance();
+        networkManager.loginController(api.baseUrl + api.login, object, new networkListener<String>()
+        {
+            @Override
+            public void getResult(String object)
+            {
+                progressDialog.dismiss();
+                try
+                {
+                    JSONObject response = new JSONObject(object);
+                    JSONObject data = new JSONArray(response.getString("Data")).getJSONObject(0);
+                    loginController(data.getString("Access_Token"), data.getString("Refresh_Token"));
+                }
+
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            Toast.makeText(login.this, "Unknown Error!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onError(String object)
+            {
+                progressDialog.dismiss();
+                try
+                {
+                    JSONObject response = new JSONObject(object);
+                    final String message = response.getString("Message");
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            Toast.makeText(login.this, message, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            Toast.makeText(login.this, "Unknown Error!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void loginController(String accessToken, String refreshToken)
+    {
+        if(remember_me.isChecked())
+        {
+            sharedPreference.deleteCredentials(login.this);
+            sharedPreference.storeCredentials(email_mobile.getText().toString(), password.getText().toString(), login.this);
+        }
+
+        else
+        {
+             sharedPreference.deleteCredentials(login.this);
+        }
+
+        sharedPreference.deleteTokens(login.this);
+        sharedPreference.storeTokens(accessToken, refreshToken, login.this);
+        go_to_landing_page();
     }
 }

@@ -88,9 +88,6 @@ public class testing_screen extends AppCompatActivity
     //Sound Service Flag
     private Boolean soundService = true;
 
-    //Graph X-Axis
-    private double x = 0.0;
-
     //BLE Scan Handler
     private Handler handler = new Handler();
 

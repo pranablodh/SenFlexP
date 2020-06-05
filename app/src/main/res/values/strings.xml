@@ -45,6 +45,8 @@
     <string name="scanning_failed">Scanning Failed.</string>
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
+    <string name="secure_login_text">Securely Logging You In SenFlexP</string>
+    <string name="secure_logout">Securely Logging You Out.</string>
     <string-array name="gender">
         <item>Select Sex</item>
         <item>Male</item>

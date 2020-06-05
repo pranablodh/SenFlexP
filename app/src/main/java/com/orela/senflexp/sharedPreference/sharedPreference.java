@@ -59,7 +59,7 @@ public class sharedPreference
         editor.apply();
     }
 
-    public void storeTokens(String accessToken, String refreshToken, Context mCtx)
+    public static void storeTokens(String accessToken, String refreshToken, Context mCtx)
     {
         tokenStorage = mCtx.getSharedPreferences(tokenStorageSharedPreferenceName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = tokenStorage.edit();
@@ -68,15 +68,29 @@ public class sharedPreference
         editor.apply();
     }
 
-    public String[] getTokens(Context mCtx)
+    public static void storeAccessToken(String accessToken, Context mCtx)
+    {
+        tokenStorage = mCtx.getSharedPreferences(tokenStorageSharedPreferenceName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = tokenStorage.edit();
+        editor.putString(tokenStorageSharedPreferenceKeyAccess, accessToken);
+        editor.apply();
+    }
+
+    public static String getAccessTokens(Context mCtx)
     {
         tokenStorage = mCtx.getSharedPreferences(tokenStorageSharedPreferenceName, Context.MODE_PRIVATE);
         String accessToken = tokenStorage.getString(tokenStorageSharedPreferenceKeyAccess,"");
-        String refreshToken = tokenStorage.getString(tokenStorageSharedPreferenceKeyRefresh,"");
-        return new String[] {accessToken, refreshToken};
+        return accessToken;
     }
 
-    public void deleteTokens(Context mCtx)
+    public static String getRefreshTokens(Context mCtx)
+    {
+        tokenStorage = mCtx.getSharedPreferences(tokenStorageSharedPreferenceName, Context.MODE_PRIVATE);
+        String refreshToken = tokenStorage.getString(tokenStorageSharedPreferenceKeyRefresh,"");
+        return refreshToken;
+    }
+
+    public static void deleteTokens(Context mCtx)
     {
         tokenStorage = mCtx.getSharedPreferences(tokenStorageSharedPreferenceName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = tokenStorage.edit();
