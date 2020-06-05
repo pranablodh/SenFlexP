@@ -47,6 +47,19 @@
     <string name="disconnected">Disconnected</string>
     <string name="secure_login_text">Securely Logging You In SenFlexP</string>
     <string name="secure_logout">Securely Logging You Out.</string>
+    <string name="my_details">My Details</string>
+    <string name="back">Back</string>
+    <string name="activation_time">Activation Time</string>
+    <string name="user_code">User Code</string>
+    <string name="house_apartment">House/Apartment</string>
+    <string name="locality">Locality</string>
+    <string name="police_station">Police Station</string>
+    <string name="post_office">Post Office</string>
+    <string name="district">District</string>
+    <string name="landmark">Landmark</string>
+    <string name="pin_code">Pin Code</string>
+    <string name="address_type">Address Type</string>
+    <string name="assigned_device">Assigned Device</string>
     <string-array name="gender">
         <item>Select Sex</item>
         <item>Male</item>

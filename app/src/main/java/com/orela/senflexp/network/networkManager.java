@@ -52,13 +52,11 @@ public class networkManager
 
     public static void loginController(String url, JSONObject object, final networkListener<String> listener)
     {
-        String accessToken = sharedPreference.getAccessTokens(networkManager.mCtx);
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(JSON, object.toString());
         com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder()
                 .url(url)
-                .addHeader("x-access-token", accessToken)
                 .post(body)
                 .build();
 
@@ -230,11 +228,6 @@ public class networkManager
                 accessTokenStore(responseBody);
                 Log.d("HTTP_REQ_DATA", responseBody);
             }
-
-//            else if(responseCode == 401)
-//            {
-//                goToLogin();
-//            }
         }
 
         catch (IOException e)
