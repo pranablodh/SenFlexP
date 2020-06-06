@@ -368,6 +368,13 @@ public class testing_screen extends AppCompatActivity
         finish();
     }
 
+    private void go_to_submit_result()
+    {
+        Intent go = new Intent(testing_screen.this, com.orela.senflexp.activities.submitTestResult.class);
+        startActivity(go);
+        finish();
+    }
+
     private void show_show_case_view()
     {
         ShowcaseConfig config = new ShowcaseConfig();
@@ -873,6 +880,8 @@ public class testing_screen extends AppCompatActivity
                     connection_status_pulse.setText(R.string.disconnected);
                     connection_status_pulse.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
                 }
+
+                go_to_submit_result();
             }
         }.start();
     }

@@ -9,4 +9,8 @@ public class networkListener<T>
     public void onError(T object)
     {
     }
+
+    public void noConnection(T object)
+    {
+    }
 }

@@ -31,7 +31,14 @@ public class splash_screen extends AppCompatActivity
             {
                 if(!sharedPreference.getFlag(splash_screen.this))
                 {
+                    sharedPreference.deleteTokens(splash_screen.this);
                     go_to_onboarding();
+                }
+
+                else if(!sharedPreference.getAccessTokens(splash_screen.this).isEmpty() &&
+                        !sharedPreference.getRefreshTokens(splash_screen.this).isEmpty())
+                {
+                    go_to_landing();
                 }
 
                 else
@@ -60,6 +67,13 @@ public class splash_screen extends AppCompatActivity
     private void go_to_login()
     {
         Intent go = new Intent(splash_screen.this, login.class);
+        startActivity(go);
+        finish();
+    }
+
+    private void go_to_landing()
+    {
+        Intent go = new Intent(splash_screen.this, landing_page.class);
         startActivity(go);
         finish();
     }

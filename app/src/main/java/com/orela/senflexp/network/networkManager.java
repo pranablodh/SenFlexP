@@ -65,7 +65,8 @@ public class networkManager
             @Override
             public void onFailure(Request request, IOException e)
             {
-                listener.onError(e.toString());
+                showError();
+                listener.noConnection(e.toString());
             }
 
             @Override
@@ -103,7 +104,8 @@ public class networkManager
             @Override
             public void onFailure(Request request, IOException e)
             {
-                listener.onError(e.toString());
+                showError();
+                listener.noConnection(e.toString());
             }
 
             @Override
@@ -140,7 +142,8 @@ public class networkManager
             @Override
             public void onFailure(Request request, IOException e)
             {
-                listener.onError(e.toString());
+                showError();
+                listener.noConnection(e.toString());
             }
 
             @Override
@@ -179,7 +182,8 @@ public class networkManager
             @Override
             public void onFailure(Request request, IOException e)
             {
-                listener.onError(e.toString());
+                showError();
+                listener.noConnection(e.toString());
             }
 
             @Override
@@ -276,5 +280,17 @@ public class networkManager
         });
         ((Activity)networkManager.mCtx).startActivity(go);
         ((Activity)networkManager.mCtx).finish();
+    }
+
+    private static void showError()
+    {
+        ((Activity)networkManager.mCtx).runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Toast.makeText(networkManager.mCtx, "Internet Connection Issue!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

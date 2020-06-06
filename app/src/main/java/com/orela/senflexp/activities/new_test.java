@@ -130,8 +130,8 @@ public class new_test extends AppCompatActivity
                     return;
                 }
 
-                senflex_file = "SenFlexP_" + test_id + "_" + System.currentTimeMillis();
-                ioxy_file = "iOxy_" + test_id + "_" + System.currentTimeMillis();
+                senflex_file = "SenFlexP_" + test_id.getText().toString() + "_" + System.currentTimeMillis();
+                ioxy_file = "iOxy_" + test_id.getText().toString() + "_" + System.currentTimeMillis();
                 store_data();
             }
         });
@@ -282,7 +282,7 @@ public class new_test extends AppCompatActivity
                 sex.getSelectedItem().toString(), mobile.getText().toString(),
                 email.getText().toString(), FinalEncodedImage, senflex_file,
                 ioxy_file,new_test.this);
-        sharedPreference.storeDeviceID("1354", new_test.this);
+        sharedPreference.storeDeviceID("SenP-0001", new_test.this);
         go_to_testing_page();
     }
 
@@ -410,7 +410,6 @@ public class new_test extends AppCompatActivity
                 image.setBackground(null);
                 image.setImageBitmap(mphoto);
                 FinalEncodedImage = base64Encoding(mphoto);
-                Log.d("Image", FinalEncodedImage.toString());
             }
             catch (Exception e)
             {
@@ -425,20 +424,9 @@ public class new_test extends AppCompatActivity
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         assert mphoto != null;
-        mphoto.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+        mphoto.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
-
-        try
-        {
-            String data = new String(imageBytes, StandardCharsets.UTF_8);
-            return gZip.compress(data);
-        }
-
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            return Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        }
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
     private void show_show_case_view()

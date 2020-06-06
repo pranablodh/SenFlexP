@@ -13,6 +13,7 @@ public class gZip
 {
     public static String compress(String string) throws IOException
     {
+        String text = "";
         try
         {
             ByteArrayOutputStream os = new ByteArrayOutputStream(string.length());
@@ -21,17 +22,17 @@ public class gZip
             gos.close();
             byte[] compressed = os.toByteArray();
             os.close();
-            String text = Base64.encodeToString(compressed, Base64.DEFAULT);
+            text = Base64.encodeToString(compressed, Base64.DEFAULT);
             Log.d("file_###", text);
-            return text;
         }
 
         catch (IOException e)
         {
             e.printStackTrace();
             Log.d("file_###", e.toString());
-            return "false";
         }
+
+        return text;
     }
 
     public static String decompress(String text) throws IOException

@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -65,6 +66,7 @@ public class login extends AppCompatActivity
     //Dialog Box Element
     private Dialog progressDialog;
     private TextView dialog_text;
+    private LottieAnimationView animation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -266,6 +268,8 @@ public class login extends AppCompatActivity
         progressDialog = new Dialog(login.this);
         progressDialog.setContentView(R.layout.dialog_loading);
         dialog_text = (TextView) progressDialog.findViewById(R.id.dialog_text);
+        animation = (LottieAnimationView) progressDialog.findViewById(R.id.animation);
+        animation.setAnimation(R.raw.cycle_animation);
         dialog_text.setText(R.string.secure_login_text);
         progressDialog.setCancelable(false);
         Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -345,6 +349,12 @@ public class login extends AppCompatActivity
                         }
                     });
                 }
+            }
+
+            @Override
+            public void noConnection(String object)
+            {
+                progressDialog.dismiss();
             }
         });
     }

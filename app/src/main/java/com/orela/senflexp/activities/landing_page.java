@@ -189,24 +189,11 @@ public class landing_page extends AppCompatActivity
                 progressDialog.dismiss();
                 //Log.d("HTTP_REQ_DATA", object);
             }
-        });
-    }
-
-    private void getData()
-    {
-        networkManager.getInstance();
-        networkManager.httpGet(api.baseUrl + api.userDetails, new networkListener<String>()
-        {
-            @Override
-            public void getResult(String object)
-            {
-                Log.d("HTTP_REQ_DATA", object);
-            }
 
             @Override
-            public void onError(String object)
+            public void noConnection(String object)
             {
-                Log.d("HTTP_REQ_DATA", object);
+                progressDialog.dismiss();
             }
         });
     }
