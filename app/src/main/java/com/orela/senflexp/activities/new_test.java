@@ -283,7 +283,8 @@ public class new_test extends AppCompatActivity
                 email.getText().toString(), FinalEncodedImage, senflex_file,
                 ioxy_file,new_test.this);
         sharedPreference.storeDeviceID("SenP-0001", new_test.this);
-        go_to_testing_page();
+        //go_to_testing_page();
+        go_to_submit_result();
     }
 
     //Checking Permission
@@ -484,5 +485,12 @@ public class new_test extends AppCompatActivity
         mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
         mDatePicker.setTitle("Select date");
         mDatePicker.show();
+    }
+
+    private void go_to_submit_result()
+    {
+        Intent go = new Intent(new_test.this, com.orela.senflexp.activities.submitTestResult.class);
+        startActivity(go);
+        finish();
     }
 }

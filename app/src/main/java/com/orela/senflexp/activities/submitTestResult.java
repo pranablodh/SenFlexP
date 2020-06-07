@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -19,8 +20,13 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.orela.senflexp.R;
+import com.orela.senflexp.database.databaseHelper;
+import com.orela.senflexp.database.databaseManager;
 import com.orela.senflexp.fileManagement.fileReader;
 import com.orela.senflexp.fileManagement.gZip;
+import com.orela.senflexp.network.api;
+import com.orela.senflexp.network.networkListener;
+import com.orela.senflexp.network.networkManager;
 import com.orela.senflexp.sharedPreference.sharedPreference;
 
 import org.json.JSONObject;
@@ -49,11 +55,16 @@ public class submitTestResult extends AppCompatActivity
     private TextView dialog_text;
     private LottieAnimationView animation;
 
+    //DB Element
+    private databaseManager dbManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_test_result);
+        networkManager.getInstance(this);
+        dbManager = new databaseManager(this);
 
         //Hiding Action Bar
         ActionBar actionBar = getSupportActionBar();
@@ -77,7 +88,8 @@ public class submitTestResult extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-
+                showProgressDialog(R.raw.verify_test, R.string.verify_test_data);
+                requestBody();
             }
         });
 
@@ -86,22 +98,12 @@ public class submitTestResult extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-
+                saveData();
             }
         });
 
         showProgressDialog(R.raw.verify_test, R.string.verify_test_data);
         requestBody();
-        //showProgressDialog(R.raw.uploading, R.string.uploading_test_data);
-
-        new Handler().postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                progressDialog.dismiss();
-            }
-        }, 3000);
     }
 
     private void showProgressDialog(int animationAsset, int text)
@@ -134,13 +136,12 @@ public class submitTestResult extends AppCompatActivity
 
     private void requestBody()
     {
-        String sensorData = "";
-        String iOxyData = "";
-        String image = "";
+        String sensorData = "x";
+        String iOxyData = "x";
+        String image = "x";
         JSONObject object = new JSONObject();
         final String[] testData = sharedPreference.getTestParameters(submitTestResult.this);
         imageBuilder(testData[8]);
-        Log.d("USER_DETAILS", testData[8]);
 
         runOnUiThread(new Runnable()
         {
@@ -172,7 +173,7 @@ public class submitTestResult extends AppCompatActivity
             return;
         }
 
-        if(iOxyData.isEmpty() || image.isEmpty())
+        if(sensorData.isEmpty() || image.isEmpty())
         {
             progressDialog.dismiss();
             Toast.makeText(submitTestResult.this, "Unable to Prepare Data Before Sending.", Toast.LENGTH_SHORT).show();
@@ -192,14 +193,102 @@ public class submitTestResult extends AppCompatActivity
             object.put("picture", image);
             object.put("test_data", sensorData);
             object.put("ioxy_data", iOxyData);
-            Log.d("TEST_DATA", object.toString());
+            progressDialog.dismiss();
+            showProgressDialog(R.raw.uploading, R.string.uploading_test_data);
+            httpRequest(object);
         }
 
         catch (Exception e)
         {
             progressDialog.dismiss();
             Toast.makeText(submitTestResult.this, "Unable to Prepare Data Before Sending.", Toast.LENGTH_SHORT).show();
+            Log.d("TEST_DATA", e.toString());
             e.printStackTrace();
         }
+    }
+
+    private void httpRequest(JSONObject object)
+    {
+        networkManager.httpPost(api.baseUrl + api.submitTest, object, new networkListener<String>()
+        {
+            @Override
+            public void getResult(String object)
+            {
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        progressDialog.dismiss();
+                        Toast.makeText(submitTestResult.this, "Data Successfully Uploaded.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                goToDash();
+            }
+
+            @Override
+            public void onError(String object)
+            {
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        progressDialog.dismiss();
+                        Toast.makeText(submitTestResult.this, "Data Uploading Failed.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void noConnection(String object)
+            {
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    private void saveData()
+    {
+        try
+        {
+            dbManager.open();
+            if(!databaseManager.insert())
+            {
+                dbManager.close();
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Toast.makeText(submitTestResult.this, "Unable to Store Data Locally.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+            }
+            dbManager.close();
+            goToDash();
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.d("SQL_DB", e.toString());
+            runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    Toast.makeText(submitTestResult.this, "Unable to Store Data Locally.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void goToDash()
+    {
+        Intent go = new Intent(submitTestResult.this, landing_page.class);
+        startActivity(go);
+        finish();
     }
 }

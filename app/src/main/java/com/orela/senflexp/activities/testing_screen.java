@@ -864,7 +864,7 @@ public class testing_screen extends AppCompatActivity
             @Override
             public void onFinish()
             {
-                timer.setText("0s.");
+                timer.setText(R.string.o_s_time);
                 if(SenFlexGatt != null && bluetoothAdapter != null)
                 {
                     SenFlexGatt.close();

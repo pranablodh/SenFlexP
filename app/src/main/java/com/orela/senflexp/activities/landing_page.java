@@ -76,7 +76,7 @@ public class landing_page extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(landing_page.this, "Coming Soon..!!", Toast.LENGTH_SHORT).show();
+                pastTest();
             }
         });
 
@@ -125,6 +125,13 @@ public class landing_page extends AppCompatActivity
     private void go_to_my_details()
     {
         Intent go = new Intent(landing_page.this, com.orela.senflexp.activities.myDetails.class);
+        startActivity(go);
+        finish();
+    }
+
+    private void pastTest()
+    {
+        Intent go = new Intent(landing_page.this, pastTestDash.class);
         startActivity(go);
         finish();
     }
