@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.orela.senflexp.R;
 import com.orela.senflexp.network.networkManager;
@@ -23,6 +25,7 @@ public class toBeSubmit extends AppCompatActivity
     //Recycler View
     private RecyclerView testList;
     private List<submitDataBinder> testData;
+    private TextView emptyMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,14 +35,10 @@ public class toBeSubmit extends AppCompatActivity
         networkManager.getInstance(this);
 
         //UI Elements
+        emptyMessage = (TextView) findViewById(R.id.emptyMessage);
         testList = (RecyclerView) findViewById(R.id.testList);
         testList.setHasFixedSize(true);
         testList.setLayoutManager(new LinearLayoutManager(toBeSubmit.this, LinearLayoutManager.VERTICAL, false));
-
-        //Hiding Action Bar
-//        ActionBar actionBar = getSupportActionBar();
-//        assert actionBar != null;
-//        actionBar.hide();
 
         inflateRecyclerView("X");
     }

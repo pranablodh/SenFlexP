@@ -1,5 +1,6 @@
 package com.orela.senflexp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -43,6 +44,7 @@ public class submittedTest extends AppCompatActivity
     private EditText nameFilter;
     private Button previous;
     private Button next;
+    private TextView emptyMessage;
 
     //Recycler View
     private RecyclerView testList;
@@ -52,9 +54,11 @@ public class submittedTest extends AppCompatActivity
     private Dialog progressDialog;
     private TextView dialog_text;
     private LottieAnimationView animation;
+    private submittedTestAdapter adapterList;
 
     //Offset Variable
     private int offsetVariable = 0;
+    private Boolean isLoading = false;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -71,6 +75,7 @@ public class submittedTest extends AppCompatActivity
         nameFilter = (EditText) findViewById(R.id.nameFilter);
         previous = (Button) findViewById(R.id.previous);
         next = (Button) findViewById(R.id.next);
+        emptyMessage = (TextView) findViewById(R.id.emptyMessage);
         testList = (RecyclerView) findViewById(R.id.testList);
         testList.setHasFixedSize(true);
         testList.setLayoutManager(new LinearLayoutManager(submittedTest.this, LinearLayoutManager.VERTICAL, false));
@@ -112,7 +117,6 @@ public class submittedTest extends AppCompatActivity
                 }
             }
         });
-
         inflateRecyclerView("X");
     }
 
@@ -172,6 +176,9 @@ public class submittedTest extends AppCompatActivity
 
     private void inflateRecyclerView(String object)
     {
+
+//        testList.setVisibility(View.GONE);
+//        emptyMessage.setVisibility(View.VISIBLE);
         try
         {
             testData = new ArrayList<>();
@@ -181,7 +188,7 @@ public class submittedTest extends AppCompatActivity
                     , "xzy"));
             testData.add(new submittedTestDataBinder("Pranab", "100", "12:02:2020", "Y", "SENP-001"
                     , "xzy"));
-            submittedTestAdapter adapterList  = new submittedTestAdapter(submittedTest.this, testData);
+            adapterList  = new submittedTestAdapter(submittedTest.this, testData);
             testList.setAdapter(adapterList);
         }
 

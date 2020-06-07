@@ -79,6 +79,8 @@
     <string name="test_time">Test Time</string>
     <string name="report_generated">Report Generated.</string>
     <string name="submit">Submit</string>
+    <string name="no_data_available">No Data Available</string>
+    <string name="no_data_available_submission">No Data Available for Submission</string>
     <string-array name="gender">
         <item>Select Sex</item>
         <item>Male</item>
