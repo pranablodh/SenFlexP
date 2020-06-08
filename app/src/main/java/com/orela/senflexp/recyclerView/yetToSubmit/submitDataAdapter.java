@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -39,7 +40,7 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
     private LottieAnimationView animation;
 
     //Activity UI Elements
-    private TextView emptyMessage;
+    private CardView emptyMessage;
     private RecyclerView testList;
 
     public submitDataAdapter(Context mCtx, List<submitDataBinder> submitTest)
@@ -65,6 +66,7 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
         submitDataViewHolder.name.setText(aDataBind.getName());
         submitDataViewHolder.testId.setText(aDataBind.getTestID());
         submitDataViewHolder.deviceId.setText(aDataBind.getDeviceID());
+        submitDataViewHolder.testTime.setText(aDataBind.getTestTime());
 
         //Dialog Initializer
         progressDialog = new Dialog(mCtx);
@@ -91,6 +93,7 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
         TextView name;
         TextView testId;
         TextView deviceId;
+        TextView testTime;
         CircleImageView image;
         Button submit;
 
@@ -102,7 +105,8 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
             deviceId = itemView.findViewById(R.id.deviceId);
             image = itemView.findViewById(R.id.image);
             submit = itemView.findViewById(R.id.submit);
-            emptyMessage = (TextView) ((Activity)mCtx).findViewById(R.id.emptyMessage);
+            testTime = itemView.findViewById(R.id.testTime);
+            emptyMessage = (CardView) ((Activity)mCtx).findViewById(R.id.emptyMessage);
             testList = (RecyclerView) ((Activity)mCtx).findViewById(R.id.testList);
         }
     }

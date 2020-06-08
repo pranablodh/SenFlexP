@@ -81,6 +81,10 @@
     <string name="submit">Submit</string>
     <string name="no_data_available">No Data Available</string>
     <string name="no_data_available_submission">No Data Available for Submission</string>
+    <string name="one_time_password">One Time Password</string>
+    <string name="enter_otp_to_verify_mobile_number">Enter OTP to Verify Mobile Number.</string>
+    <string name="submit_otp">Submit OTP</string>
+    <string name="resend_otp">Resend OTP</string>
     <string-array name="gender">
         <item>Select Sex</item>
         <item>Male</item>

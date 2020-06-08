@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +46,8 @@ public class submittedTest extends AppCompatActivity
     private EditText nameFilter;
     private Button previous;
     private Button next;
-    private TextView emptyMessage;
+    private CardView emptyMessage;
+    private LinearLayout buttonContainer;
 
     //Recycler View
     private RecyclerView testList;
@@ -75,8 +78,9 @@ public class submittedTest extends AppCompatActivity
         nameFilter = (EditText) findViewById(R.id.nameFilter);
         previous = (Button) findViewById(R.id.previous);
         next = (Button) findViewById(R.id.next);
-        emptyMessage = (TextView) findViewById(R.id.emptyMessage);
+        emptyMessage = (CardView) findViewById(R.id.emptyMessage);
         testList = (RecyclerView) findViewById(R.id.testList);
+        buttonContainer = (LinearLayout) findViewById(R.id.buttonContainer);
         testList.setHasFixedSize(true);
         testList.setLayoutManager(new LinearLayoutManager(submittedTest.this, LinearLayoutManager.VERTICAL, false));
 
@@ -178,6 +182,7 @@ public class submittedTest extends AppCompatActivity
     {
 
 //        testList.setVisibility(View.GONE);
+//        buttonContainer.setVisibility(View.GONE);
 //        emptyMessage.setVisibility(View.VISIBLE);
         try
         {

@@ -90,8 +90,7 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:inputType="text"
-                                tools:ignore="TextFields"
-                                android:text="Demo"/>
+                                tools:ignore="TextFields"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,8 +110,7 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:inputType="text"
-                                tools:ignore="TextFields"
-                                android:text="Demo"/>
+                                tools:ignore="TextFields"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,8 +130,7 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:inputType="text"
-                                tools:ignore="TextFields"
-                                android:text="Demo"/>
+                                tools:ignore="TextFields"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -154,8 +151,7 @@
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:inputType="date"
                                 tools:ignore="TextFields"
-                                android:focusable="false"
-                                android:text="06/08/1993"/>
+                                android:focusable="false"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -192,8 +188,7 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:inputType="number"
-                                tools:ignore="TextFields"
-                                android:text="9804710805"/>
+                                tools:ignore="TextFields"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -213,8 +208,7 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:inputType="textEmailAddress"
-                                tools:ignore="TextFields"
-                                android:text="a@b.com"/>
+                                tools:ignore="TextFields"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 

@@ -48,17 +48,44 @@
         android:layout_gravity="center_horizontal">
     </androidx.recyclerview.widget.RecyclerView>
 
-    <TextView
+    <androidx.cardview.widget.CardView
         android:id="@+id/emptyMessage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_width="@dimen/_260sdp"
+        android:layout_height="@dimen/_290sdp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/white"
         android:visibility="gone"
-        android:textSize="@dimen/_25sdp"
-        android:textColor="@color/red"
-        android:text="@string/no_data_available" />
+        android:layout_marginTop="@dimen/_80sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="@dimen/_180sdp"
+                app:lottie_rawRes="@raw/empty_data"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true"
+                android:layout_marginBottom="@dimen/_10sdp"/>
+
+            <TextView
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="wrap_content"
+                android:text="@string/no_data_available"
+                android:gravity="center"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/red"
+                android:layout_marginTop="@dimen/_10sdp"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/buttonContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

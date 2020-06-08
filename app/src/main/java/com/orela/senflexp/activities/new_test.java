@@ -7,14 +7,19 @@ import androidx.cardview.widget.CardView;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +29,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -34,11 +41,12 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.material.snackbar.Snackbar;
 import com.orela.senflexp.R;
 import com.orela.senflexp.fileManagement.gZip;
 import com.orela.senflexp.inputValidator.inputValidator;
+import com.orela.senflexp.network.networkManager;
 import com.orela.senflexp.sharedPreference.sharedPreference;
-import com.orela.senflexp.staticText.staticText;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
@@ -57,7 +65,7 @@ public class new_test extends AppCompatActivity
 
     //Image Picker Elements
     private static final int PICK_FROM_CAMERA = 0;
-    private String FinalEncodedImage = staticText.image;
+    private String FinalEncodedImage = "";
 
     //UI Elements
     private Button next;
@@ -71,6 +79,13 @@ public class new_test extends AppCompatActivity
     private Spinner sex;
     private EditText mobile;
     private EditText email;
+
+    //Dialog Box Element
+    private Dialog otpDialog;
+    private EditText otp;
+    private TextView resend_text;
+    private Button closeButton;
+    private Button otpSubmit;
 
     //Variables for Permission
     private static final int INITIAL_REQUEST = 1337;
@@ -86,6 +101,7 @@ public class new_test extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_test);
+        networkManager.getInstance(this);
 
         //Hiding Action Bar
         ActionBar actionBar = getSupportActionBar();
@@ -113,8 +129,8 @@ public class new_test extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                if(!validate_name() | !validate_test_id() | !validate_address() | !validate_dob() | !validate_gender()
-                    | !validate_mobile() | !validate_email())
+                if(!validate_name() | !validate_test_id() | !validate_address() | !validate_dob() | !validate_gender(v)
+                    | !validate_mobile() | !validate_email() | !validate_image(v))
                 {
                     return;
                 }
@@ -170,7 +186,7 @@ public class new_test extends AppCompatActivity
     //Input Validator
     private boolean validate_name()
     {
-        if(!inputValidator.checkString(name.getText().toString()))
+        if(name.getText().length() == 0)
         {
             name.setError("Please Input a Valid Name.");
             return false;
@@ -228,11 +244,12 @@ public class new_test extends AppCompatActivity
         }
     }
 
-    private Boolean validate_gender()
+    private Boolean validate_gender(View v)
     {
         if(!inputValidator.checkNoWhiteSpace(sex.getSelectedItem().toString()))
         {
-            ((TextView)sex.getSelectedView()).setError("Wrong Selection.");
+            ((TextView)sex.getSelectedView()).setError("x");
+            Snackbar.make(v, "Please Select a Sex from Dropdown.", Snackbar.LENGTH_LONG).show();
             return false;
         }
 
@@ -273,6 +290,20 @@ public class new_test extends AppCompatActivity
         }
     }
 
+    private Boolean validate_image(View v)
+    {
+        if(FinalEncodedImage.isEmpty())
+        {
+            Snackbar.make(v, "Please Capture an Image of the Person.", Snackbar.LENGTH_LONG).show();
+            return false;
+        }
+
+        else
+        {
+            return true;
+        }
+    }
+
     //Storing Data into Shared Preference
     private void store_data()
     {
@@ -284,7 +315,8 @@ public class new_test extends AppCompatActivity
                 ioxy_file,new_test.this);
         sharedPreference.storeDeviceID("SenP-0001", new_test.this);
         //go_to_testing_page();
-        go_to_submit_result();
+        //go_to_submit_result();
+        showOTPDialog();
     }
 
     //Checking Permission
@@ -321,6 +353,62 @@ public class new_test extends AppCompatActivity
         go.putExtra("ioxy", ioxy_file);
         startActivity(go);
         finish();
+    }
+
+    private void showOTPDialog()
+    {
+        otpDialog = new Dialog(new_test.this);
+        otpDialog.setContentView(R.layout.dialog_otp);
+        otp = (EditText) otpDialog.findViewById(R.id.otp);
+        closeButton = (Button) otpDialog.findViewById(R.id.closeButton);
+        resend_text = (TextView) otpDialog.findViewById(R.id.resend_text);
+        otpSubmit = (Button) otpDialog.findViewById(R.id.otpSubmit);
+
+        closeButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                otpDialog.dismiss();
+            }
+        });
+
+        otpSubmit.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(new_test.this, otp.getText().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        resend_text.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                resend_text.setClickable(false);
+                new CountDownTimer(30000, 1000)
+                {
+                    @Override
+                    public void onTick(long millisUntilFinished)
+                    {
+                        resend_text.setText(String.format("Resend OTP in %ss", String.valueOf(millisUntilFinished / 1000)));
+                    }
+
+                    @Override
+                    public void onFinish()
+                    {
+                        resend_text.setText(R.string.resend_otp);
+                        resend_text.setClickable(true);
+                    }
+                }.start();
+            }
+        });
+
+        otpDialog.setCancelable(false);
+        Objects.requireNonNull(otpDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        otpDialog.show();
     }
 
     //Location Service Checking
@@ -485,12 +573,5 @@ public class new_test extends AppCompatActivity
         mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
         mDatePicker.setTitle("Select date");
         mDatePicker.show();
-    }
-
-    private void go_to_submit_result()
-    {
-        Intent go = new Intent(new_test.this, com.orela.senflexp.activities.submitTestResult.class);
-        startActivity(go);
-        finish();
     }
 }
