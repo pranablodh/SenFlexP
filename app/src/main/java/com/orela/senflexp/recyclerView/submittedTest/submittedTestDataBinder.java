@@ -44,8 +44,7 @@ public class submittedTestDataBinder
 
     public String getTestTime()
     {
-        //return parseTime(testTime);
-        return testTime;
+        return parseTime(testTime);
     }
 
     public String getReportGen()
@@ -63,10 +62,9 @@ public class submittedTestDataBinder
         return deviceID;
     }
 
-    public String getImage()
+    public Bitmap getImage()
     {
-        //return imageBuilder(image);
-        return image;
+        return imageBuilder(image);
     }
 
     private String parseTime(String time)

@@ -1,6 +1,7 @@
 package com.orela.senflexp.recyclerView.submittedTest;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,9 +42,20 @@ public class submittedTestAdapter extends RecyclerView.Adapter<submittedTestAdap
         submittedTestDataBinder aDataBind = submittedTest.get(i);
         submittedTestViewHolder.name.setText(aDataBind.getName());
         submittedTestViewHolder.testId.setText(aDataBind.getTestID());
-        submittedTestViewHolder.testTime.setText(aDataBind.getTestID());
+        submittedTestViewHolder.testTime.setText(aDataBind.getTestTime());
         submittedTestViewHolder.report.setText(aDataBind.getReportGen());
         submittedTestViewHolder.deviceId.setText(aDataBind.getDeviceID());
+
+        try
+        {
+            submittedTestViewHolder.image.setImageBitmap(aDataBind.getImage());
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.d("JSON_PARSE_!", e.toString());
+        }
     }
 
     @Override
@@ -71,5 +83,11 @@ public class submittedTestAdapter extends RecyclerView.Adapter<submittedTestAdap
             deviceId = itemView.findViewById(R.id.deviceId);
             image = itemView.findViewById(R.id.image);
         }
+    }
+
+    public void removeAll()
+    {
+        submittedTest.clear();
+        notifyDataSetChanged();
     }
 }

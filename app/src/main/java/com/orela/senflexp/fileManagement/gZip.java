@@ -47,7 +47,6 @@ public class gZip
         {
             e.printStackTrace();
             Log.d("file_###", e.toString());
-            return "false";
         }
 
         final int BUFFER_SIZE = 32;

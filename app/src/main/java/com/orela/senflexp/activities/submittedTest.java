@@ -19,10 +19,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -37,6 +39,10 @@ import com.orela.senflexp.network.networkManager;
 import com.orela.senflexp.recyclerView.submittedTest.submittedTestAdapter;
 import com.orela.senflexp.recyclerView.submittedTest.submittedTestDataBinder;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,7 +52,7 @@ public class submittedTest extends AppCompatActivity
     private EditText nameFilter;
     private Button previous;
     private Button next;
-    private CardView emptyMessage;
+    private LinearLayout emptyMessage;
     private LinearLayout buttonContainer;
 
     //Recycler View
@@ -78,7 +84,7 @@ public class submittedTest extends AppCompatActivity
         nameFilter = (EditText) findViewById(R.id.nameFilter);
         previous = (Button) findViewById(R.id.previous);
         next = (Button) findViewById(R.id.next);
-        emptyMessage = (CardView) findViewById(R.id.emptyMessage);
+        emptyMessage = (LinearLayout) findViewById(R.id.emptyMessage);
         testList = (RecyclerView) findViewById(R.id.testList);
         buttonContainer = (LinearLayout) findViewById(R.id.buttonContainer);
         testList.setHasFixedSize(true);
@@ -96,6 +102,9 @@ public class submittedTest extends AppCompatActivity
                     return;
                 }
                 offsetVariable -= 10;
+
+                showProgressDialog(R.raw.downloading, R.string.fetching_test_data);
+                httpRequest();
             }
         });
 
@@ -117,11 +126,14 @@ public class submittedTest extends AppCompatActivity
             {
                 if(!hasFocus)
                 {
-                    Toast.makeText(submittedTest.this, nameFilter.getText().toString(), Toast.LENGTH_SHORT).show();
+                    showProgressDialog(R.raw.downloading, R.string.fetching_test_data);
+                    offsetVariable = 0;
+                    httpRequest();
                 }
             }
         });
-        inflateRecyclerView("X");
+        showProgressDialog(R.raw.downloading, R.string.fetching_test_data);
+        httpRequest();
     }
 
     @Override
@@ -152,14 +164,29 @@ public class submittedTest extends AppCompatActivity
 
     private void httpRequest()
     {
+        JSONObject body = new JSONObject();
+        try
+        {
+            body.put("name", nameFilter.getText().toString());
+            body.put("offset", offsetVariable);
+        }
+
+        catch (Exception e)
+        {
+            Log.d("TEST_DET", e.toString());
+            e.printStackTrace();
+            hideRecyclerView();
+        }
+
         networkManager.getInstance();
-        networkManager.httpGet(api.baseUrl + api.testList, new networkListener<String>()
+        networkManager.httpPost(api.baseUrl + api.testList, body, new networkListener<String>()
         {
             @Override
             public void getResult(String object)
             {
                 progressDialog.dismiss();
                 Log.d("TEST_DET", object);
+                inflateRecyclerView(object);
             }
 
             @Override
@@ -167,6 +194,7 @@ public class submittedTest extends AppCompatActivity
             {
                 progressDialog.dismiss();
                 Log.d("TEST_DET", object);
+                hideRecyclerView();
             }
 
             @Override
@@ -174,33 +202,93 @@ public class submittedTest extends AppCompatActivity
             {
                 progressDialog.dismiss();
                 Log.d("TEST_DET", object);
+                hideRecyclerViewNoInternet();
             }
         });
     }
 
     private void inflateRecyclerView(String object)
     {
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                testList.setVisibility(View.VISIBLE);
+                emptyMessage.setVisibility(View.GONE);
+                nameFilter.setEnabled(true);
+            }
+        });
 
-//        testList.setVisibility(View.GONE);
-//        buttonContainer.setVisibility(View.GONE);
-//        emptyMessage.setVisibility(View.VISIBLE);
         try
         {
+            JSONObject response = new JSONObject(object);
             testData = new ArrayList<>();
-            testData.add(new submittedTestDataBinder("Pranab", "100", "12:02:2020", "Y", "SENP-001"
-            , "xzy"));
-            testData.add(new submittedTestDataBinder("Pranab", "100", "12:02:2020", "Y", "SENP-001"
-                    , "xzy"));
-            testData.add(new submittedTestDataBinder("Pranab", "100", "12:02:2020", "Y", "SENP-001"
-                    , "xzy"));
-            adapterList  = new submittedTestAdapter(submittedTest.this, testData);
-            testList.setAdapter(adapterList);
+            JSONArray dataArray = new JSONArray(response.getString("Data"));
+
+            for(int i = 0; i< dataArray.length(); i++)
+            {
+                JSONObject responseData = new JSONObject(dataArray.getJSONObject(i).toString());
+                String test_id = responseData.getString("test_id");
+                String test_time = responseData.getString("test_time");
+                String patient_name = responseData.getString("patient_name");
+                String processed_flag = responseData.getString("processed_flag");
+                String serial_no = responseData.getString("serial_no");
+                String image = responseData.getString("picture");
+                testData.add(new submittedTestDataBinder(patient_name, test_id, test_time, processed_flag, serial_no, image));
+            }
+
+            runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    adapterList  = new submittedTestAdapter(submittedTest.this, testData);
+                    testList.setAdapter(adapterList);
+                }
+            });
         }
 
         catch (Exception e)
         {
             e.printStackTrace();
-            Log.d("RECY_VIEW", e.toString());
+            Log.d("JSON_PARSE_!", e.toString());
+            hideRecyclerView();
         }
+    }
+
+    private void hideRecyclerView()
+    {
+        testData.clear();
+        testList.removeAllViewsInLayout();
+
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                testList.setVisibility(View.GONE);
+                emptyMessage.setVisibility(View.VISIBLE);
+                nameFilter.setEnabled(false);
+                nameFilter.setText("");
+            }
+        });
+    }
+
+    private void hideRecyclerViewNoInternet()
+    {
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                testList.setVisibility(View.GONE);
+                emptyMessage.setVisibility(View.VISIBLE);
+                nameFilter.setEnabled(false);
+                nameFilter.setText("");
+                previous.setEnabled(false);
+                next.setEnabled(false);
+            }
+        });
     }
 }
