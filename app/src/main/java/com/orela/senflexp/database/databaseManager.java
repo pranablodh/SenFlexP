@@ -86,8 +86,6 @@ public class databaseManager
         {
             cursor.moveToFirst();
         }
-
-        Log.d("SQL_DB", cursor.getString(cursor.getColumnIndex("slno")));
         return cursor;
     }
 

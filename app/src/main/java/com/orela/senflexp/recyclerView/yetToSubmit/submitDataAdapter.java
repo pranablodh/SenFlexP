@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,17 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
         submitDataViewHolder.testId.setText(aDataBind.getTestID());
         submitDataViewHolder.deviceId.setText(aDataBind.getDeviceID());
         submitDataViewHolder.testTime.setText(aDataBind.getTestTime());
+
+        try
+        {
+            submitDataViewHolder.image.setImageBitmap(aDataBind.getImage());
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.d("JSON_PARSE_!", e.toString());
+        }
 
         //Dialog Initializer
         progressDialog = new Dialog(mCtx);

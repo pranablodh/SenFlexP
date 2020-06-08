@@ -38,10 +38,9 @@ public class submitDataBinder
         return testID;
     }
 
-    public String getImage()
+    public Bitmap getImage()
     {
-        //return imageBuilder(image);
-        return image;
+        return imageBuilder(image);
     }
 
     public String getTestTime()
