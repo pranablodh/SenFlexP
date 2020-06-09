@@ -88,7 +88,6 @@ public class submitTestResult extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                showProgressDialog(R.raw.verify_test, R.string.verify_test_data);
                 requestBody();
             }
         });
@@ -102,21 +101,33 @@ public class submitTestResult extends AppCompatActivity
             }
         });
 
-        showProgressDialog(R.raw.verify_test, R.string.verify_test_data);
         requestBody();
     }
 
-    private void showProgressDialog(int animationAsset, int text)
+    @Override
+    public void onBackPressed()
     {
-        progressDialog = new Dialog(submitTestResult.this);
-        progressDialog.setContentView(R.layout.dialog_loading);
-        dialog_text = (TextView) progressDialog.findViewById(R.id.dialog_text);
-        animation = (LottieAnimationView) progressDialog.findViewById(R.id.animation);
-        animation.setAnimation(animationAsset);
-        dialog_text.setText(text);
-        progressDialog.setCancelable(false);
-        Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        progressDialog.show();
+        super.onBackPressed();
+        goToDash();
+    }
+
+    private void showProgressDialog(final int animationAsset, final int text)
+    {
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                progressDialog = new Dialog(submitTestResult.this);
+                progressDialog.setContentView(R.layout.dialog_loading);
+                dialog_text = (TextView) progressDialog.findViewById(R.id.dialog_text);
+                animation = (LottieAnimationView) progressDialog.findViewById(R.id.animation);
+                animation.setAnimation(animationAsset);
+                dialog_text.setText(text);
+                progressDialog.setCancelable(false);
+                Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            }
+        });
     }
 
     private void imageBuilder(String imageData)
@@ -136,9 +147,9 @@ public class submitTestResult extends AppCompatActivity
 
     private void requestBody()
     {
-        String sensorData = "x";
-        String iOxyData = "x";
-        String image = "x";
+        String sensorData = "";
+        String iOxyData = "";
+        String image = "";
         JSONObject object = new JSONObject();
         final String[] testData = sharedPreference.getTestParameters(submitTestResult.this);
         imageBuilder(testData[8]);
@@ -167,7 +178,6 @@ public class submitTestResult extends AppCompatActivity
 
         catch (IOException e)
         {
-            progressDialog.dismiss();
             Toast.makeText(submitTestResult.this, "Unable to Prepare Data Before Sending.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
             return;
@@ -175,7 +185,6 @@ public class submitTestResult extends AppCompatActivity
 
         if(sensorData.isEmpty() || image.isEmpty())
         {
-            progressDialog.dismiss();
             Toast.makeText(submitTestResult.this, "Unable to Prepare Data Before Sending.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -193,14 +202,12 @@ public class submitTestResult extends AppCompatActivity
             object.put("picture", image);
             object.put("test_data", sensorData);
             object.put("ioxy_data", iOxyData);
-            progressDialog.dismiss();
             showProgressDialog(R.raw.uploading, R.string.uploading_test_data);
             httpRequest(object);
         }
 
         catch (Exception e)
         {
-            progressDialog.dismiss();
             Toast.makeText(submitTestResult.this, "Unable to Prepare Data Before Sending.", Toast.LENGTH_SHORT).show();
             Log.d("TEST_DATA", e.toString());
             e.printStackTrace();
@@ -236,6 +243,8 @@ public class submitTestResult extends AppCompatActivity
                     {
                         progressDialog.dismiss();
                         Toast.makeText(submitTestResult.this, "Data Uploading Failed.", Toast.LENGTH_SHORT).show();
+                        saveData();
+                        goToDash();
                     }
                 });
             }
@@ -244,6 +253,8 @@ public class submitTestResult extends AppCompatActivity
             public void noConnection(String object)
             {
                 progressDialog.dismiss();
+                saveData();
+                goToDash();
             }
         });
     }
@@ -264,9 +275,21 @@ public class submitTestResult extends AppCompatActivity
                         Toast.makeText(submitTestResult.this, "Unable to Store Data Locally.", Toast.LENGTH_SHORT).show();
                     }
                 });
-                return;
             }
-            dbManager.close();
+
+            else
+            {
+                dbManager.close();
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Toast.makeText(submitTestResult.this, "Data Stored Locally.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dbManager.close();
+            }
             goToDash();
         }
 

@@ -19,6 +19,7 @@ public class databaseHelper extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase db)
     {
         final String createQuery = "CREATE TABLE IF NOT EXISTS test_data(slno INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP," +
                 "test_id TEXT NOT NULL, device_id TEXT NOT NULL, patient_name TEXT NOT NULL, address TEXT NOT NULL," +
                 "dob TEXT NOT NULL, sex TEXT NOT NULL, mobile TEXT NOT NULL, email TEXT NOT NULL, picture TEXT NOT NULL," +
                 "test_data TEXT NOT NULL, ioxy_data TEXT)";

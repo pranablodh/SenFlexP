@@ -314,8 +314,6 @@ public class new_test extends AppCompatActivity
                 email.getText().toString(), FinalEncodedImage, senflex_file,
                 ioxy_file,new_test.this);
         sharedPreference.storeDeviceID("SenP-0001", new_test.this);
-        //go_to_testing_page();
-        //go_to_submit_result();
         showOTPDialog();
     }
 
@@ -355,6 +353,13 @@ public class new_test extends AppCompatActivity
         finish();
     }
 
+    private void go_to_submit_result()
+    {
+        Intent go = new Intent(new_test.this, com.orela.senflexp.activities.submitTestResult.class);
+        startActivity(go);
+        finish();
+    }
+
     private void showOTPDialog()
     {
         otpDialog = new Dialog(new_test.this);
@@ -378,7 +383,8 @@ public class new_test extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(new_test.this, otp.getText().toString(), Toast.LENGTH_SHORT).show();
+                go_to_testing_page();
+                //go_to_submit_result();
             }
         });
 

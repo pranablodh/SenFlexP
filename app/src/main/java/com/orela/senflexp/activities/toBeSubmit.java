@@ -72,15 +72,11 @@ public class toBeSubmit extends AppCompatActivity
             Cursor cursor = databaseManager.getData();
             testData = new ArrayList<>();
             Log.d("SQL_SELECT", Arrays.toString(cursor.getColumnNames()));
+
             for(int i = 0; i <= cursor.getColumnCount(); i++)
             {
-//                Log.d("SQL_SELECT", String.valueOf(cursor.getString(7)));
-//                Log.d("SQL_SELECT", String.valueOf(cursor.getString(8)));
-//                Log.d("SQL_SELECT", String.valueOf(cursor.getString(9)));
-//                Log.d("SQL_SELECT", String.valueOf(cursor.getString(10)));
-//                Log.d("SQL_SELECT", String.valueOf(cursor.getString(11)));
-                testData.add(new submitDataBinder(cursor.getString(3), cursor.getString(1),
-                cursor.getString(2), cursor.getString(9), "04:30:01"));
+                testData.add(new submitDataBinder(cursor.getString(4), cursor.getString(2),
+                cursor.getString(3), cursor.getString(10), cursor.getString(1)));
             }
 
             //testData.add(new submitDataBinder("Pranab", "100", "12:02:2020", "Y", "04:30:01"));

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.orela.senflexp.R;
 import com.orela.senflexp.activities.submitTestResult;
+import com.orela.senflexp.database.databaseManager;
 import com.orela.senflexp.network.api;
 import com.orela.senflexp.network.networkListener;
 import com.orela.senflexp.network.networkManager;
@@ -44,11 +45,15 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
     private CardView emptyMessage;
     private RecyclerView testList;
 
+    //DB Element
+    private databaseManager dbManager;
+
     public submitDataAdapter(Context mCtx, List<submitDataBinder> submitTest)
     {
         this.mCtx = mCtx;
         this.submitTest = submitTest;
         networkManager.getInstance(mCtx);
+        dbManager = new databaseManager(mCtx);
     }
 
     @NonNull
@@ -88,8 +93,8 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
             @Override
             public void onClick(View v)
             {
-                //showProgressDialog(R.raw.uploading, R.string.uploading_test_data);
-                removeAt(i);
+                showProgressDialog(R.raw.uploading, R.string.uploading_test_data);
+                getData(i, submitDataViewHolder.testId.getText().toString(), submitDataViewHolder.deviceId.getText().toString());
             }
         });
     }
@@ -123,20 +128,45 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
         }
     }
 
-    private void removeAt(int position)
+    private void getData(int position, String test_id, String device_id)
     {
-        submitTest.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, submitTest.size());
+        dbManager.open();
+        JSONObject object = databaseManager.getSingleData(test_id, device_id);
+        httpRequest(object, position, test_id, device_id);
+        Log.d("SQL_SELECT", object.toString());
+        dbManager.close();
+    }
 
-        if(submitTest.size() == 0)
+    private void deleteData(int position, String test_id, String device_id)
+    {
+        dbManager.open();
+        if(databaseManager.delete(test_id, device_id))
         {
-            testList.setVisibility(View.GONE);
-            emptyMessage.setVisibility(View.VISIBLE);
+            removeAt(position);
         }
     }
 
-    private void httpRequest(JSONObject object, int position)
+    private void removeAt(final int position)
+    {
+        ((Activity)mCtx).runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                submitTest.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, submitTest.size());
+
+                if(submitTest.size() == 0)
+                {
+                    testList.setVisibility(View.GONE);
+                    emptyMessage.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+    private void httpRequest(JSONObject object, final int position, final String test_id, final String device_id)
     {
         networkManager.getInstance();
         networkManager.httpPost(api.baseUrl + api.submitTest, object, new networkListener<String>()
@@ -144,19 +174,21 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
             @Override
             public void getResult(String object)
             {
-
+                progressDialog.dismiss();
+                deleteData(position, test_id, device_id);
             }
 
             @Override
             public void onError(String object)
             {
-
+                progressDialog.dismiss();
+                showToast("Failed.");
             }
 
             @Override
             public void noConnection(String object)
             {
-
+                progressDialog.dismiss();
             }
         });
     }
@@ -172,5 +204,17 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
         progressDialog.setCancelable(false);
         Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         progressDialog.show();
+    }
+
+    private void showToast(final String message)
+    {
+        ((Activity)mCtx).runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Toast.makeText(mCtx, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

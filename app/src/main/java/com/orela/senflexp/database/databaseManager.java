@@ -13,6 +13,8 @@ import com.orela.senflexp.fileManagement.fileReader;
 import com.orela.senflexp.fileManagement.gZip;
 import com.orela.senflexp.sharedPreference.sharedPreference;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 public class databaseManager
@@ -72,6 +74,12 @@ public class databaseManager
         contentValue.put("picture", image);
         contentValue.put("test_data", sensorData);
         contentValue.put("ioxy_data", iOxyData);
+
+//        final String createQuery = "INSERT INTO test_data(test_id, device_id, patient_name, address, dob," +
+//                "sex, mobile, email, picture, test_data, ioxy_data) VALUES(testData[2], testData[1], testData[0]," +
+//                "testData[3], testData[4], testData[5], testData[6], testData[7], image, sensorData, iOxyData)";
+//
+//        database.rawQuery(createQuery, )
         Log.d("SQL_DB", "INSERTED");
         return database.insert(databaseHelper.TABLE_NAME, null, contentValue) > 0;
     }
@@ -89,6 +97,46 @@ public class databaseManager
         return cursor;
     }
 
+    public static JSONObject getSingleData(String test_id, String device_id)
+    {
+        SQLiteDatabase db = database;
+        final String createQuery = "SELECT * FROM test_data WHERE test_id =? AND device_id =?";
+        Cursor cursor = db.rawQuery( createQuery, new String[]{test_id, device_id},null );
+
+        if(cursor != null)
+        {
+            cursor.moveToFirst();
+        }
+
+        JSONObject object = new JSONObject();
+
+        try
+        {
+            assert cursor != null;
+            object.put("test_id", cursor.getString(2));
+            object.put("device_id", cursor.getString(3));
+            object.put("patient_name", cursor.getString(4));
+            object.put("dob", cursor.getString(6));
+            object.put("address", cursor.getString(5));
+            object.put("sex", cursor.getString(7));
+            object.put("mobile", cursor.getString(8));
+            object.put("email", cursor.getString(9));
+            object.put("test_data", cursor.getString(11));
+            object.put("ioxy_data", cursor.getString(12));
+            object.put("timestamp", cursor.getString(1));
+            object.put("picture", cursor.getString(10));
+        }
+
+        catch (Exception e)
+        {
+            Log.d("SQL_SELECT", e.toString());
+            e.printStackTrace();
+        }
+
+        cursor.close();
+        return object;
+    }
+
     public static Cursor dropTable()
     {
         final String createQuery = "DROP TABLE IF EXISTS " + databaseHelper.TABLE_NAME;
@@ -96,8 +144,8 @@ public class databaseManager
         return cursor;
     }
 
-    public static boolean delete(String id, String device_id)
+    public static boolean delete(String test_id, String device_id)
     {
-        return database.delete(databaseHelper.TABLE_NAME, "test_id =? AND device_id =?", new String[]{id, device_id}) > 0;
+        return database.delete(databaseHelper.TABLE_NAME, "test_id =? AND device_id =?", new String[]{test_id, device_id}) > 0;
     }
 }
