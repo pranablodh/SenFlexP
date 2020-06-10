@@ -5,11 +5,11 @@
     tools:ignore="GoogleAppIndexingWarning">
 
     <supports-screens
-        android:anyDensity="false"
+        android:anyDensity="true"
+        android:smallScreens="false"
         android:largeScreens="true"
         android:largestWidthLimitDp="840"
         android:normalScreens="true"
-        android:smallScreens="false"
         android:xlargeScreens="true" />
 
     <uses-permission android:name="android.permission.BLUETOOTH" />

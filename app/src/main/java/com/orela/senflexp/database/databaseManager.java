@@ -76,11 +76,11 @@ public class databaseManager
         contentValue.put("ioxy_data", iOxyData);
 
 //        final String createQuery = "INSERT INTO test_data(test_id, device_id, patient_name, address, dob," +
-//                "sex, mobile, email, picture, test_data, ioxy_data) VALUES(testData[2], testData[1], testData[0]," +
-//                "testData[3], testData[4], testData[5], testData[6], testData[7], image, sensorData, iOxyData)";
-//
-//        database.rawQuery(createQuery, )
-        Log.d("SQL_DB", "INSERTED");
+//        "sex, mobile, email, picture, test_data, ioxy_data) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//        Cursor cursor = database.rawQuery(createQuery, new String[]{testData[2], testData[1], testData[0], testData[3],
+//        testData[4], testData[5], testData[6], testData[7], image, sensorData, iOxyData}, null);
+//        cursor.close();
+
         return database.insert(databaseHelper.TABLE_NAME, null, contentValue) > 0;
     }
 
@@ -101,7 +101,7 @@ public class databaseManager
     {
         SQLiteDatabase db = database;
         final String createQuery = "SELECT * FROM test_data WHERE test_id =? AND device_id =?";
-        Cursor cursor = db.rawQuery( createQuery, new String[]{test_id, device_id},null );
+        Cursor cursor = db.rawQuery(createQuery, new String[]{test_id, device_id},null);
 
         if(cursor != null)
         {
