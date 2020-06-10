@@ -881,6 +881,12 @@ public class testing_screen extends AppCompatActivity
                     connection_status_pulse.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
                 }
 
+                assert bluetoothAdapter != null;
+                if(bluetoothAdapter.isEnabled())
+                {
+                    bluetoothAdapter.disable();
+                }
+
                 go_to_submit_result();
             }
         }.start();
