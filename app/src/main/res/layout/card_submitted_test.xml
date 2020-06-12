@@ -16,7 +16,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="@dimen/_280sdp"
-            android:layout_height="@dimen/_300sdp"
+            android:layout_height="@dimen/_350sdp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_15sdp"
             app:cardElevation="@dimen/_5sdp"
@@ -25,7 +25,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="clip_horizontal"
                 android:layout_marginTop="@dimen/_40sdp"
@@ -97,6 +97,31 @@
                     android:layout_marginTop="@dimen/_1sdp"
                     android:baselineAligned="false"
                     android:text="@string/test_time"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/separator"
+                    tools:ignore="ContentDescription"
+                    android:layout_marginTop="@dimen/_2sdp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:text="@string/submission_time"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"/>
+
+                <TextView
+                    android:id="@+id/submissionTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:baselineAligned="false"
+                    android:text="@string/submission_time"
                     android:textSize="@dimen/_13sdp"
                     android:textColor="@color/black" />
 

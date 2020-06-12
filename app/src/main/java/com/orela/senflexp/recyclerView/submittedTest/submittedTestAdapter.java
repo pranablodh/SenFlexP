@@ -43,6 +43,7 @@ public class submittedTestAdapter extends RecyclerView.Adapter<submittedTestAdap
         submittedTestViewHolder.name.setText(aDataBind.getName());
         submittedTestViewHolder.testId.setText(aDataBind.getTestID());
         submittedTestViewHolder.testTime.setText(aDataBind.getTestTime());
+        submittedTestViewHolder.submissionTime.setText(aDataBind.getSubmissionTime());
         submittedTestViewHolder.report.setText(aDataBind.getReportGen());
         submittedTestViewHolder.deviceId.setText(aDataBind.getDeviceID());
 
@@ -69,6 +70,7 @@ public class submittedTestAdapter extends RecyclerView.Adapter<submittedTestAdap
         TextView name;
         TextView testId;
         TextView testTime;
+        TextView submissionTime;
         TextView report;
         TextView deviceId;
         CircleImageView image;
@@ -79,6 +81,7 @@ public class submittedTestAdapter extends RecyclerView.Adapter<submittedTestAdap
             name = itemView.findViewById(R.id.name);
             testId = itemView.findViewById(R.id.testId);
             testTime = itemView.findViewById(R.id.testTime);
+            submissionTime = itemView.findViewById(R.id.submissionTime);
             report = itemView.findViewById(R.id.report);
             deviceId = itemView.findViewById(R.id.deviceId);
             image = itemView.findViewById(R.id.image);

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -50,6 +51,8 @@ import com.orela.senflexp.sharedPreference.sharedPreference;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -79,6 +82,7 @@ public class new_test extends AppCompatActivity
     private Spinner sex;
     private EditText mobile;
     private EditText email;
+    private EditText last_test_id;
 
     //Dialog Box Element
     private Dialog otpDialog;
@@ -94,6 +98,9 @@ public class new_test extends AppCompatActivity
     //Test File Name Variables
     private String senflex_file = "";
     private String ioxy_file = "";
+
+    //Mobile Verification Flag
+    private String mobileFlag = "N";
 
 
     @Override
@@ -115,6 +122,7 @@ public class new_test extends AppCompatActivity
         cardView = (CardView) findViewById(R.id.cardView);
         name = (EditText) findViewById(R.id.name);
         test_id = (EditText) findViewById(R.id.test_id);
+        last_test_id = (EditText) findViewById(R.id.last_test_id);
         address = (EditText) findViewById(R.id.address);
         dob = (EditText) findViewById(R.id.dob);
         sex = (Spinner) findViewById(R.id.sex);
@@ -148,7 +156,7 @@ public class new_test extends AppCompatActivity
 
                 senflex_file = "SenFlexP_" + test_id.getText().toString() + "_" + System.currentTimeMillis();
                 ioxy_file = "iOxy_" + test_id.getText().toString() + "_" + System.currentTimeMillis();
-                store_data();
+                showOTPDialog();
             }
         });
 
@@ -312,9 +320,17 @@ public class new_test extends AppCompatActivity
                 address.getText().toString(), dob.getText().toString(),
                 sex.getSelectedItem().toString(), mobile.getText().toString(),
                 email.getText().toString(), FinalEncodedImage, senflex_file,
-                ioxy_file,new_test.this);
+                ioxy_file, getCurrentDate(), last_test_id.getText().toString(), mobileFlag, new_test.this);
         sharedPreference.storeDeviceID("SenP-0001", new_test.this);
-        showOTPDialog();
+    }
+
+    private String getCurrentDate()
+    {
+        @SuppressLint("SimpleDateFormat")
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        String date = df.format(Calendar.getInstance().getTime());
+        Log.d("DATE_DATA", date);
+        return date;
     }
 
     //Checking Permission
@@ -374,7 +390,10 @@ public class new_test extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                mobileFlag = "N";
                 otpDialog.dismiss();
+                store_data();
+                go_to_submit_result();
             }
         });
 
@@ -383,6 +402,8 @@ public class new_test extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                mobileFlag = "Y";
+                store_data();
                 go_to_testing_page();
                 //go_to_submit_result();
             }

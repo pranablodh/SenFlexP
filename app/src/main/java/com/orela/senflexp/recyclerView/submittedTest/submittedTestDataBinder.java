@@ -18,15 +18,18 @@ public class submittedTestDataBinder
     private String name = "";
     private String testID = "";
     private String testTime = "";
+    private String submissionTime = "";
     private String reportGen = "";
     private String deviceID = "";
     private String image = "";
 
-    public submittedTestDataBinder(String name, String testID, String testTime, String reportGen, String deviceID, String image)
+    public submittedTestDataBinder(String name, String testID, String testTime, String submissionTime,
+                                   String reportGen, String deviceID, String image)
     {
         this.name = name;
         this.testID = testID;
         this.testTime = testTime;
+        this.submissionTime = submissionTime;
         this.reportGen = reportGen;
         this.deviceID = deviceID;
         this.image = image;
@@ -45,6 +48,11 @@ public class submittedTestDataBinder
     public String getTestTime()
     {
         return parseTime(testTime);
+    }
+
+    public String getSubmissionTime()
+    {
+        return parseTime(submissionTime);
     }
 
     public String getReportGen()

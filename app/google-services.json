@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "816090456524",
+    "firebase_url": "https://senflexp.firebaseio.com",
+    "project_id": "senflexp",
+    "storage_bucket": "senflexp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816090456524:android:d1d0222f9b76df3a9afd69",
+        "android_client_info": {
+          "package_name": "com.orela.senflexp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "816090456524-4vqmg95epmsh54kuf8kndqbetvkidbo4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orela.senflexp",
+            "certificate_hash": "a458726e106da204f4b047460a9ab89d9343298b"
+          }
+        },
+        {
+          "client_id": "816090456524-67jvu9optqmt1tp9n4283gif982dbo4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAa8MTpZaLKTVBPCGMsSGDLgnK0gl4d3NQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "816090456524-67jvu9optqmt1tp9n4283gif982dbo4g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

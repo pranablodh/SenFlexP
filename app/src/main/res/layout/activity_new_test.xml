@@ -122,6 +122,26 @@
                             app:endIconMode="clear_text">
 
                             <EditText
+                                android:id="@+id/last_test_id"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="@string/last_test_id"
+                                android:maxLines="1"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:inputType="text"
+                                tools:ignore="TextFields"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            app:endIconMode="clear_text">
+
+                            <EditText
                                 android:id="@+id/address"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"

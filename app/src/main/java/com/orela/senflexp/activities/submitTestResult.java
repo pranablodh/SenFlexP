@@ -199,9 +199,12 @@ public class submitTestResult extends AppCompatActivity
             object.put("sex", testData[5]);
             object.put("mobile", testData[6]);
             object.put("email", testData[7]);
+            object.put("test_time", testData[11]);
+            object.put("last_lab_test_id", testData[12]);
             object.put("picture", image);
             object.put("test_data", sensorData);
             object.put("ioxy_data", iOxyData);
+            object.put("veri_flag", testData[13]);
             showProgressDialog(R.raw.uploading, R.string.uploading_test_data);
             httpRequest(object);
         }

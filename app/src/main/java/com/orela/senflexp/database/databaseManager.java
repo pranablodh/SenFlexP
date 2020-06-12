@@ -63,6 +63,7 @@ public class databaseManager
             return false;
         }
 
+        contentValue.put("timestamp", testData[11]);
         contentValue.put("test_id", testData[2]);
         contentValue.put("device_id", testData[1]);
         contentValue.put("patient_name", testData[0]);
@@ -74,12 +75,7 @@ public class databaseManager
         contentValue.put("picture", image);
         contentValue.put("test_data", sensorData);
         contentValue.put("ioxy_data", iOxyData);
-
-//        final String createQuery = "INSERT INTO test_data(test_id, device_id, patient_name, address, dob," +
-//        "sex, mobile, email, picture, test_data, ioxy_data) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-//        Cursor cursor = database.rawQuery(createQuery, new String[]{testData[2], testData[1], testData[0], testData[3],
-//        testData[4], testData[5], testData[6], testData[7], image, sensorData, iOxyData}, null);
-//        cursor.close();
+        contentValue.put("verify", testData[13]);
 
         return database.insert(databaseHelper.TABLE_NAME, null, contentValue) > 0;
     }
@@ -123,8 +119,9 @@ public class databaseManager
             object.put("email", cursor.getString(9));
             object.put("test_data", cursor.getString(11));
             object.put("ioxy_data", cursor.getString(12));
-            object.put("timestamp", cursor.getString(1));
+            object.put("test_time", cursor.getString(1));
             object.put("picture", cursor.getString(10));
+            object.put("veri_flag", cursor.getString(13));
         }
 
         catch (Exception e)

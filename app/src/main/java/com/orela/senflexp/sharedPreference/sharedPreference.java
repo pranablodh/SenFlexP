@@ -26,8 +26,11 @@ public class sharedPreference
     private static final String testDataSharedPreferenceKeyMobile = "mobile";
     private static final String testDataSharedPreferenceKeyEmail = "email";
     private static final String testDataSharedPreferenceKeyPhoto = "photo";
+    private static final String testDataSharedPreferenceKeyTestTime = "testTime";
     private static final String testDataSharedPreferenceKeySenFlexPFile = "senflex";
     private static final String testDataSharedPreferenceKeyBPLiOxyFile = "ioxy";
+    private static final String testDataSharedPreferenceKeyLastTestID = "lastTest";
+    private static final String testDataSharedPreferenceKeyMobVerification = "verification";
 
     private static SharedPreferences credentialStorage;
     private static SharedPreferences tokenStorage;
@@ -122,7 +125,7 @@ public class sharedPreference
 
     public static void storeTestParameters(String name, String testID, String address, String dob, String sex,
                                            String mobile, String email, String photo, String senflex, String ioxy,
-                                           Context mCtx)
+                                           String testTime, String lastTest, String mob_veri, Context mCtx)
     {
         testDataStorage = mCtx.getSharedPreferences(testDataSharedPreferenceName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = testDataStorage.edit();
@@ -136,6 +139,9 @@ public class sharedPreference
         editor.putString(testDataSharedPreferenceKeyPhoto, photo);
         editor.putString(testDataSharedPreferenceKeySenFlexPFile, senflex);
         editor.putString(testDataSharedPreferenceKeyBPLiOxyFile, ioxy);
+        editor.putString(testDataSharedPreferenceKeyTestTime, testTime);
+        editor.putString(testDataSharedPreferenceKeyLastTestID, lastTest);
+        editor.putString(testDataSharedPreferenceKeyMobVerification, mob_veri);
         editor.apply();
     }
 
@@ -161,7 +167,10 @@ public class sharedPreference
         String photo = testDataStorage.getString(testDataSharedPreferenceKeyPhoto, "");
         String senflex = testDataStorage.getString(testDataSharedPreferenceKeySenFlexPFile, "");
         String ioxy = testDataStorage.getString(testDataSharedPreferenceKeyBPLiOxyFile, "");
-        return new String[] {name, deviceID, testID, address, dob, sex, mobile, email, photo, senflex, ioxy};
+        String testTime = testDataStorage.getString(testDataSharedPreferenceKeyTestTime, "");
+        String lastTest = testDataStorage.getString(testDataSharedPreferenceKeyLastTestID, "");
+        String mobVeri = testDataStorage.getString(testDataSharedPreferenceKeyMobVerification, "");
+        return new String[] {name, deviceID, testID, address, dob, sex, mobile, email, photo, senflex, ioxy, testTime, lastTest, mobVeri};
     }
 
     public static void deleteTestData(Context mCtx)

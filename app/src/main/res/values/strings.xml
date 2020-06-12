@@ -85,6 +85,8 @@
     <string name="enter_otp_to_verify_mobile_number">Enter OTP to Verify Mobile Number.</string>
     <string name="submit_otp">Submit OTP</string>
     <string name="resend_otp">Resend OTP</string>
+    <string name="submission_time">Submission Time</string>
+    <string name="last_test_id">Last Test ID</string>
     <string-array name="gender">
         <item>Select Sex</item>
         <item>Male</item>

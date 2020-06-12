@@ -231,11 +231,12 @@ public class submittedTest extends AppCompatActivity
                 JSONObject responseData = new JSONObject(dataArray.getJSONObject(i).toString());
                 String test_id = responseData.getString("test_id");
                 String test_time = responseData.getString("test_time");
+                String submission_time = responseData.getString("submission_time");
                 String patient_name = responseData.getString("patient_name");
                 String processed_flag = responseData.getString("processed_flag");
                 String serial_no = responseData.getString("serial_no");
                 String image = responseData.getString("picture");
-                testData.add(new submittedTestDataBinder(patient_name, test_id, test_time, processed_flag, serial_no, image));
+                testData.add(new submittedTestDataBinder(patient_name, test_id, test_time, submission_time, processed_flag, serial_no, image));
             }
 
             runOnUiThread(new Runnable()
