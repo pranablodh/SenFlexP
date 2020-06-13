@@ -7,45 +7,37 @@
     android:layout_height="match_parent"
     tools:context=".activities.myDetails"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bg_splash">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/login_header"
-        android:orientation="vertical"
-        android:gravity="start">
+        android:textColor="@color/white"
+        android:text="@string/my_details"
+        android:gravity="center"
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="normal"
+        android:layout_marginTop="@dimen/_35sdp"
+        android:layout_marginStart="@dimen/_10sdp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@string/my_details"
-            android:gravity="center"
-            android:textSize="@dimen/_20sdp"
-            android:textStyle="normal"
-            android:layout_marginTop="@dimen/_35sdp"
-            android:layout_marginStart="@dimen/_10sdp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@string/app_name"
-            android:gravity="center"
-            android:textSize="@dimen/_25sdp"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:layout_marginStart="@dimen/_10sdp"/>
-
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="@string/app_name"
+        android:gravity="center"
+        android:textSize="@dimen/_25sdp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginStart="@dimen/_10sdp"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="@dimen/_280sdp"
         android:layout_height="@dimen/_350sdp"
         app:cardCornerRadius="@dimen/_10sdp"
         app:cardElevation="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_5sdp">
+        android:layout_marginTop="@dimen/_10sdp">
 
         <com.amar.library.ui.StickyScrollView
             android:layout_width="match_parent"
@@ -491,17 +483,25 @@
 
             </LinearLayout>
         </com.amar.library.ui.StickyScrollView>
+
     </androidx.cardview.widget.CardView>
-    
+
     <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/back_button"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:text="@string/back"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
         android:textAllCaps="false"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/senflex_logo"/>
 
 </LinearLayout>

@@ -7,42 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".activities.new_test"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:background="@drawable/bg_splash">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_150sdp"
-        android:background="@drawable/login_header"
-        android:orientation="vertical"
-        android:gravity="start">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="@string/register"
+        android:gravity="center"
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="normal"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@string/register"
-            android:gravity="center"
-            android:textSize="@dimen/_20sdp"
-            android:textStyle="normal"
-            android:layout_marginTop="@dimen/_35sdp"
-            android:layout_marginStart="@dimen/_10sdp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@string/start_test"
-            android:gravity="center"
-            android:textSize="@dimen/_25sdp"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:layout_marginStart="@dimen/_10sdp"/>
-
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="@string/start_test"
+        android:gravity="center"
+        android:textSize="@dimen/_25sdp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginStart="@dimen/_10sdp"/>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -61,7 +54,7 @@
                 android:layout_height="@dimen/_300sdp"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:layout_marginTop="@dimen/_60sdp"
+                android:layout_marginTop="@dimen/_50sdp"
                 android:layout_marginBottom="@dimen/_1sdp">
 
                 <com.amar.library.ui.StickyScrollView
@@ -281,5 +274,13 @@
         </FrameLayout>
 
     </FrameLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/senflex_logo"
+        android:layout_marginBottom="@dimen/_15sdp"/>
 
 </LinearLayout>

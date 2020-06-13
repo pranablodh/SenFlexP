@@ -7,51 +7,70 @@
     android:layout_height="match_parent"
     tools:context=".activities.splash_screen"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center"
+    android:background="@drawable/bg_splash">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/login_header"
-        tools:ignore="ContentDescription" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="@dimen/_400sdp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_10sdp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_marginTop="@dimen/_50sdp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/app_name"
-        android:textColor="@color/lightBlue"
-        android:textSize="@dimen/_40sdp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
-        app:lottie_rawRes="@raw/splash_loading"
-        app:lottie_loop="true"
-        app:lottie_autoPlay="true"
-        android:layout_marginTop="@dimen/_20sdp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/app_name"
+                android:textColor="@color/lightBlue"
+                android:textSize="@dimen/_40sdp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/_35sdp"
-        android:layout_marginBottom="@dimen/_6sdp"
-        android:text="@string/team_orela"
-        android:textColor="@color/lightBlue"
-        android:textSize="@dimen/_15sdp" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                app:lottie_rawRes="@raw/splash_loading"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true"
+                android:layout_marginTop="@dimen/_20sdp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto"
-        android:gravity="center"
-        android:text="@string/indian_institute_of_technology_nkharagpur"
-        android:textColor="@color/lightBlue"
-        android:textSize="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_10sdp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_35sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:text="@string/team_orela"
+                android:textColor="@color/lightBlue"
+                android:textSize="@dimen/_15sdp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="@string/indian_institute_of_technology_nkharagpur"
+                android:textColor="@color/lightBlue"
+                android:textSize="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_10sdp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="ContentDescription"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/senflex_logo"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>
