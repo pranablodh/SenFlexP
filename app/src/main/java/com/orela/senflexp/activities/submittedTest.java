@@ -260,8 +260,16 @@ public class submittedTest extends AppCompatActivity
 
     private void hideRecyclerView()
     {
-        testData.clear();
-        testList.removeAllViewsInLayout();
+        try
+        {
+            testData.clear();
+            testList.removeAllViewsInLayout();
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         runOnUiThread(new Runnable()
         {

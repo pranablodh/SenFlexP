@@ -87,10 +87,22 @@
     <string name="resend_otp">Resend OTP</string>
     <string name="submission_time">Submission Time</string>
     <string name="last_test_id">Last Test ID</string>
+    <string name="sample_id">Sample ID</string>
+    <string name="last_sample_id">Last Sample ID</string>
+    <string name="sample_collection_date">Sample Collection Date</string>
+    <string name="sample_collection_time">Sample Collection Time</string>
+
     <string-array name="gender">
         <item>Select Sex</item>
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
+    </string-array>
+
+    <string-array name="specimen">
+        <item>Select Specimen Type</item>
+        <item>Nasal Swab</item>
+        <item>Throat Swab</item>
+        <item>Both</item>
     </string-array>
 </resources>

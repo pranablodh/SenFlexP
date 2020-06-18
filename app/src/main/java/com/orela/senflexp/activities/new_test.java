@@ -9,6 +9,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -24,12 +25,14 @@ import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -52,8 +55,11 @@ import com.orela.senflexp.sharedPreference.sharedPreference;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
+import java.text.MessageFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -80,6 +86,7 @@ public class new_test extends AppCompatActivity
     private EditText address;
     private EditText dob;
     private Spinner sex;
+    private Spinner specimen;
     private EditText mobile;
     private EditText email;
     private EditText last_test_id;
@@ -101,6 +108,12 @@ public class new_test extends AppCompatActivity
 
     //Mobile Verification Flag
     private String mobileFlag = "N";
+
+    //Spinner Item
+    private int spinnerSelection = 0;
+
+    //Specimen Type Array
+    private final static String[] specimen_type = {"Nothing", "Nasal Swab", "Throat Swab", "Throat Swab, Nasal Swab"};
 
 
     @Override
@@ -126,6 +139,7 @@ public class new_test extends AppCompatActivity
         address = (EditText) findViewById(R.id.address);
         dob = (EditText) findViewById(R.id.dob);
         sex = (Spinner) findViewById(R.id.sex);
+        specimen = (Spinner) findViewById(R.id.specimen);
         mobile = (EditText) findViewById(R.id.mobile);
         email = (EditText) findViewById(R.id.email);
 
@@ -138,7 +152,7 @@ public class new_test extends AppCompatActivity
             public void onClick(View v)
             {
                 if(!validate_name() | !validate_test_id() | !validate_address() | !validate_dob() | !validate_gender(v)
-                    | !validate_mobile() | !validate_email() | !validate_image(v))
+                    | !validate_mobile() | !validate_email() | !validate_image(v) | !validate_specimen(v))
                 {
                     return;
                 }
@@ -180,6 +194,22 @@ public class new_test extends AppCompatActivity
                     return;
                 }
                 pick_image_from_camera();
+            }
+        });
+
+        specimen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                spinnerSelection = position;
+                Log.d("SPECIMEN_TYPE", specimen_type[spinnerSelection]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
             }
         });
     }
@@ -268,6 +298,22 @@ public class new_test extends AppCompatActivity
         }
     }
 
+    private Boolean validate_specimen(View v)
+    {
+        if(specimen.getSelectedItem().toString().equalsIgnoreCase("Select Specimen Type"))
+        {
+            ((TextView)specimen.getSelectedView()).setError("x");
+            Snackbar.make(v, "Please Select a Specimen Type from Dropdown.", Snackbar.LENGTH_LONG).show();
+            return false;
+        }
+
+        else
+        {
+            ((TextView)specimen.getSelectedView()).setError(null);
+            return true;
+        }
+    }
+
     private Boolean validate_mobile()
     {
         if(!inputValidator.checkMobileNumber(mobile.getText().toString()))
@@ -320,8 +366,10 @@ public class new_test extends AppCompatActivity
                 address.getText().toString(), dob.getText().toString(),
                 sex.getSelectedItem().toString(), mobile.getText().toString(),
                 email.getText().toString(), FinalEncodedImage, senflex_file,
-                ioxy_file, getCurrentDate(), last_test_id.getText().toString(), mobileFlag, new_test.this);
+                ioxy_file, getCurrentDate(), last_test_id.getText().toString(), mobileFlag, getCurrentDate(),
+                specimen_type[spinnerSelection], new_test.this);
         sharedPreference.storeDeviceID("SenP-0001", new_test.this);
+        go_to_testing_page();
     }
 
     private String getCurrentDate()
@@ -393,7 +441,7 @@ public class new_test extends AppCompatActivity
                 mobileFlag = "N";
                 otpDialog.dismiss();
                 store_data();
-                go_to_submit_result();
+                //go_to_submit_result();
             }
         });
 
@@ -404,7 +452,7 @@ public class new_test extends AppCompatActivity
             {
                 mobileFlag = "Y";
                 store_data();
-                go_to_testing_page();
+                //go_to_testing_page();
                 //go_to_submit_result();
             }
         });
@@ -593,8 +641,9 @@ public class new_test extends AppCompatActivity
                     month = String.valueOf(selectedmonth);
                 }
 
-                String Date = day + "/" + month + "/" + selectedyear;
+                String Date = month + "/" + day + "/" + selectedyear;
                 dob.setText(Date);
+
             }
         },mYear, mMonth, mDay);
         mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());

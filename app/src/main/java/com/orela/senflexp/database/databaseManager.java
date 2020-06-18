@@ -76,6 +76,8 @@ public class databaseManager
         contentValue.put("test_data", sensorData);
         contentValue.put("ioxy_data", iOxyData);
         contentValue.put("verify", testData[13]);
+        contentValue.put("sample_time", testData[14]);
+        contentValue.put("specimen_type", testData[15]);
 
         return database.insert(databaseHelper.TABLE_NAME, null, contentValue) > 0;
     }
@@ -122,6 +124,8 @@ public class databaseManager
             object.put("test_time", cursor.getString(1));
             object.put("picture", cursor.getString(10));
             object.put("veri_flag", cursor.getString(13));
+            object.put("sample_time", cursor.getString(14));
+            object.put("specimen_type", cursor.getString(15));
         }
 
         catch (Exception e)

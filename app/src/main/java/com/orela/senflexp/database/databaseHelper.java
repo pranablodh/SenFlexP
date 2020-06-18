@@ -22,7 +22,8 @@ public class databaseHelper extends SQLiteOpenHelper
                 "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL," +
                 "test_id TEXT NOT NULL, device_id TEXT NOT NULL, patient_name TEXT NOT NULL, address TEXT NOT NULL," +
                 "dob TEXT NOT NULL, sex TEXT NOT NULL, mobile TEXT NOT NULL, email TEXT NOT NULL, picture TEXT NOT NULL," +
-                "test_data TEXT NOT NULL, ioxy_data TEXT NOT NULL, verify TEXT NOT NULL, UNIQUE(patient_name, mobile, email, timestamp) ON CONFLICT REPLACE)";
+                "test_data TEXT NOT NULL, ioxy_data TEXT NOT NULL, verify TEXT NOT NULL, sample_time DATETIME NOT NULL, " +
+                "specimen_type TEXT NOT NULL, UNIQUE(patient_name, mobile, email, timestamp) ON CONFLICT REPLACE)";
         db.execSQL(createQuery);
     }
 

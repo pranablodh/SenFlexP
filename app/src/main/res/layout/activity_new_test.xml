@@ -98,7 +98,7 @@
                                 android:id="@+id/test_id"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:hint="@string/test_id"
+                                android:hint="@string/sample_id"
                                 android:maxLines="1"
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
@@ -118,7 +118,7 @@
                                 android:id="@+id/last_test_id"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:hint="@string/last_test_id"
+                                android:hint="@string/last_sample_id"
                                 android:maxLines="1"
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
@@ -126,6 +126,22 @@
                                 tools:ignore="TextFields"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:background="@drawable/border"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:ignore="UselessParent"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp">
+                            <Spinner
+                                android:id="@+id/specimen"
+                                android:layout_width="@dimen/_275sdp"
+                                android:layout_height="@dimen/_35sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:entries="@array/specimen" />
+                        </LinearLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="@dimen/_280sdp"

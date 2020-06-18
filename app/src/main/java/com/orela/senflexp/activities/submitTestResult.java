@@ -101,6 +101,7 @@ public class submitTestResult extends AppCompatActivity
             }
         });
 
+        showProgressDialog(R.raw.uploading, R.string.uploading_test_data);
         requestBody();
     }
 
@@ -205,7 +206,8 @@ public class submitTestResult extends AppCompatActivity
             object.put("test_data", sensorData);
             object.put("ioxy_data", iOxyData);
             object.put("veri_flag", testData[13]);
-            showProgressDialog(R.raw.uploading, R.string.uploading_test_data);
+            object.put("sample_time", testData[14]);
+            object.put("specimen_type", testData[15]);
             httpRequest(object);
         }
 
@@ -237,7 +239,7 @@ public class submitTestResult extends AppCompatActivity
             }
 
             @Override
-            public void onError(String object)
+            public void onError(final String object)
             {
                 runOnUiThread(new Runnable()
                 {
@@ -246,6 +248,7 @@ public class submitTestResult extends AppCompatActivity
                     {
                         progressDialog.dismiss();
                         Toast.makeText(submitTestResult.this, "Data Uploading Failed.", Toast.LENGTH_SHORT).show();
+                        Log.d("HHTP_REQ_123", object);
                         saveData();
                         goToDash();
                     }
