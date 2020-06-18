@@ -168,6 +168,7 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
 
     private void httpRequest(JSONObject object, final int position, final String test_id, final String device_id)
     {
+        Log.d("HTTP_REQ_DATA_SUB", "object");
         networkManager.getInstance();
         networkManager.httpPost(api.baseUrl + api.submitTest, object, new networkListener<String>()
         {
@@ -175,6 +176,7 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
             public void getResult(String object)
             {
                 progressDialog.dismiss();
+                Log.d("HTTP_REQ_DATA_SUB", object);
                 deleteData(position, test_id, device_id);
             }
 
@@ -182,12 +184,14 @@ public class submitDataAdapter extends RecyclerView.Adapter<submitDataAdapter.su
             public void onError(String object)
             {
                 progressDialog.dismiss();
+                Log.d("HTTP_REQ_DATA_SUB", object);
                 showToast("Failed.");
             }
 
             @Override
             public void noConnection(String object)
             {
+                Log.d("HTTP_REQ_DATA_SUB", object);
                 progressDialog.dismiss();
             }
         });

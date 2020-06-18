@@ -190,6 +190,8 @@ public class submitTestResult extends AppCompatActivity
             return;
         }
 
+        Log.d("SPECIMEN_TYPE_DATA", testData[15]);
+
         try
         {
             object.put("test_id", testData[2]);
@@ -207,7 +209,7 @@ public class submitTestResult extends AppCompatActivity
             object.put("ioxy_data", iOxyData);
             object.put("veri_flag", testData[13]);
             object.put("sample_time", testData[14]);
-            object.put("specimen_type", testData[15]);
+            object.put("specimen", testData[15]);
             httpRequest(object);
         }
 

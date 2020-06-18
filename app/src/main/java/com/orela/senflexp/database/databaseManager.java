@@ -125,7 +125,7 @@ public class databaseManager
             object.put("picture", cursor.getString(10));
             object.put("veri_flag", cursor.getString(13));
             object.put("sample_time", cursor.getString(14));
-            object.put("specimen_type", cursor.getString(15));
+            object.put("specimen", cursor.getString(15));
         }
 
         catch (Exception e)

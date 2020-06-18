@@ -110,7 +110,7 @@ public class new_test extends AppCompatActivity
     private String mobileFlag = "N";
 
     //Spinner Item
-    private int spinnerSelection = 0;
+    private String spinnerSelection = "";
 
     //Specimen Type Array
     private final static String[] specimen_type = {"Nothing", "Nasal Swab", "Throat Swab", "Throat Swab, Nasal Swab"};
@@ -202,8 +202,8 @@ public class new_test extends AppCompatActivity
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                spinnerSelection = position;
-                Log.d("SPECIMEN_TYPE", specimen_type[spinnerSelection]);
+                spinnerSelection = specimen_type[position];
+                Log.d("SPECIMEN_TYPE", spinnerSelection);
             }
 
             @Override
@@ -367,8 +367,9 @@ public class new_test extends AppCompatActivity
                 sex.getSelectedItem().toString(), mobile.getText().toString(),
                 email.getText().toString(), FinalEncodedImage, senflex_file,
                 ioxy_file, getCurrentDate(), last_test_id.getText().toString(), mobileFlag, getCurrentDate(),
-                specimen_type[spinnerSelection], new_test.this);
+                spinnerSelection, new_test.this);
         sharedPreference.storeDeviceID("SenP-0001", new_test.this);
+        Log.d("SPECIMEN_TYPE_DATA", spinnerSelection);
         go_to_testing_page();
     }
 
