@@ -100,7 +100,6 @@ public class testing_screen extends AppCompatActivity
     private static final String senflex_characteristic_uuid = "dd0bef0c-6e8b-49cc-a82c-304b64384ec1";
     private static final String senflex_characteristic_battery_uuid = "bddd70d8-0108-43f3-87d4-92ca46997af2";
     private static final String senflex_characteristic_pcb_temp_uuid = "01b06036-a13c-4173-a37c-354b07000a63";
-    private static final String senflex_characteristic_led_uuid = "aa707a3f-1f7a-4369-adc6-b70fcd7ee504";
     private static final String pulse_oximeter_service_uuid = "cdeacb80-5235-4c07-8846-93a37ee6b86d";
     private static final String pulse_oximeter_characteristic_uuid = "cdeacb81-5235-4c07-8846-93a37ee6b86d";
 
@@ -131,10 +130,6 @@ public class testing_screen extends AppCompatActivity
     //Test File Name Variables
     private String senflex_file = "";
     private String ioxy_file = "";
-
-    //Time Tracking Variable
-    private long senflex_start_time = 0;
-    private long ioxy_start_time = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -496,7 +491,6 @@ public class testing_screen extends AppCompatActivity
                             {
                                 connection_status_senflex.setText(R.string.connected);
                                 connection_status_senflex.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
-                                senflex_start_time = System.currentTimeMillis();
                                 countdown_timer();
                             }
 
@@ -575,8 +569,7 @@ public class testing_screen extends AppCompatActivity
                             plotData = true;
                             mpPlotClass.addEntry((float) (((double) bleDataParser.rawBleDataConversion(character.getValue())) * 0.003),
                             chart, 100,"Sensor Data",Color.RED, false);
-                            fileWriter.write(senflex_file, String.valueOf(bleDataParser.rawBleDataConversion(character.getValue())),
-                            senflex_start_time, testing_screen.this);
+                            fileWriter.write(senflex_file, String.valueOf(bleDataParser.rawBleDataConversion(character.getValue())), testing_screen.this);
                             plotData = false;
                         }
                     });
@@ -710,7 +703,6 @@ public class testing_screen extends AppCompatActivity
                             {
                                 connection_status_pulse.setText(R.string.connected);
                                 connection_status_pulse.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
-                                ioxy_start_time = System.currentTimeMillis();
                             }
 
                             else
@@ -782,7 +774,7 @@ public class testing_screen extends AppCompatActivity
                                 oxy_sat.setText(String.format("%s%%", String.valueOf(data[1])));
                                 perfusion_index.setText(String.format("%s%%", String.valueOf(data[2] / 10.0)));
                                 String text = data[0] + "," + data[1] + "," + data[2];
-                                fileWriter.write(ioxy_file, text, ioxy_start_time, testing_screen.this);
+                                fileWriter.write(ioxy_file, text, testing_screen.this);
                             }
                         }
                     });
@@ -803,18 +795,19 @@ public class testing_screen extends AppCompatActivity
 
     private void countdown_timer()
     {
-        new CountDownTimer(300000, 1000)
+        new CountDownTimer(400000, 1000)
         {
             @Override
             public void onTick(final long millisUntilFinished)
             {
+                final long count = (400000 - millisUntilFinished) / 1000;
                 runOnUiThread(new Runnable()
                 {
                     @Override
                     public void run()
                     {
-                        timer.setText(String.format("%s", String.valueOf(millisUntilFinished / 1000) + 's'));
-                        if(millisUntilFinished / 1000 >= 280)
+                        timer.setText(String.format("%s", String.valueOf(count) + 's'));
+                        if(count <= 20)
                         {
                             instruction.setText(R.string.pour_drops_of_water);
                             instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
@@ -825,7 +818,7 @@ public class testing_screen extends AppCompatActivity
                             }
                         }
 
-                        else if(millisUntilFinished / 1000 < 280 && millisUntilFinished / 1000 >= 180)
+                        else if(count <= 170)
                         {
                             instruction.setText(R.string.do_nothing);
                             instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
@@ -836,7 +829,7 @@ public class testing_screen extends AppCompatActivity
                             }
                         }
 
-                        else if(millisUntilFinished / 1000 < 180 && millisUntilFinished / 1000 >= 160)
+                        else if(count <= 190)
                         {
                             instruction.setText(R.string.pour_drops_of_sample);
                             instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));

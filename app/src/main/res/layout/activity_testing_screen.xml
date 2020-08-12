@@ -137,7 +137,7 @@
             android:id="@+id/timer"
             android:layout_width="@dimen/_45sdp"
             android:layout_height="wrap_content"
-            android:text="300s"
+            android:text="--s"
             android:textColor="@color/lightGreen"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold"/>

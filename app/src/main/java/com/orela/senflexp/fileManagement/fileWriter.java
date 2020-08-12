@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class fileWriter
 {
-    public static void write(String fileName, String data, long time, Context mCtx)
+    public static void write(String fileName, String data, Context mCtx)
     {
         try
         {
@@ -22,8 +22,7 @@ public class fileWriter
             }
             final File filepath = new File(root, fileName + ".txt");
             FileWriter writer = new FileWriter(filepath, true);
-            long difference = System.currentTimeMillis() - time;
-            writer.append(String.valueOf(difference));
+            writer.append(String.valueOf(System.currentTimeMillis()));
             writer.append(",");
             writer.append(data);
             writer.append("\n");
