@@ -93,8 +93,9 @@ public class bleDataParser
 
             batteryCurrentValue = batteryValueHigh_int * 256 + batteryValueLow_int;
 
-            final double batteryVoltage = 6.46 * (double) batteryCurrentValue / 1000.0;
-            final int batteryPercentage = (int) (3.6 + ((batteryVoltage - 3.6) / 0.006266));
+            final double batteryVoltage = (5.77 * (double) batteryCurrentValue) / 1000.0;
+            //final int batteryPercentage = (int) (3.6 + ((batteryVoltage - 3.6) / 0.006266));
+            final int batteryPercentage = (int) ((175.41525 * batteryVoltage) - 630.04685);
 
             if (batteryPercentage > 85 && batteryPercentage <= 120)
             {

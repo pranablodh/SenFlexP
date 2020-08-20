@@ -49,6 +49,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.orela.senflexp.R;
 import com.orela.senflexp.fileManagement.gZip;
 import com.orela.senflexp.inputValidator.inputValidator;
+import com.orela.senflexp.network.api;
 import com.orela.senflexp.network.networkManager;
 import com.orela.senflexp.sharedPreference.sharedPreference;
 
@@ -74,7 +75,7 @@ public class new_test extends AppCompatActivity
 
     //Image Picker Elements
     private static final int PICK_FROM_CAMERA = 0;
-    private String FinalEncodedImage = "";
+    private String FinalEncodedImage = api.image;
 
     //UI Elements
     private Button next;

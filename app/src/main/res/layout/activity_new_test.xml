@@ -83,7 +83,8 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:inputType="text"
-                                tools:ignore="TextFields"/>
+                                tools:ignore="TextFields"
+                                android:text="Demo Test"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,7 +124,8 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:inputType="text"
-                                tools:ignore="TextFields"/>
+                                tools:ignore="TextFields"
+                                android:text="Null"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -159,7 +161,8 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:inputType="text"
-                                tools:ignore="TextFields"/>
+                                tools:ignore="TextFields"
+                                android:text="Demo Test"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -217,7 +220,8 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:inputType="number"
-                                tools:ignore="TextFields"/>
+                                tools:ignore="TextFields"
+                                android:text="0123456789"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -237,7 +241,8 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:inputType="textEmailAddress"
-                                tools:ignore="TextFields"/>
+                                tools:ignore="TextFields"
+                                android:text="admin@senflex.in"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 

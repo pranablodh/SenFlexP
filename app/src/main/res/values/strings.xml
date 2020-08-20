@@ -21,14 +21,14 @@
     <string name="start_test">Start Test!</string>
     <string name="name">Name</string>
     <string name="device_id">Device ID</string>
-    <string name="test_id">Test ID</string>
+    <string name="test_id">Test ID:</string>
     <string name="address">Address</string>
     <string name="date_of_birth">Date of Birth</string>
     <string name="sex">Sex</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="email_id">Email ID</string>
     <string name="device_status">Device Status</string>
-    <string name="senflexp_connected">SenFlexP Connected:  </string>
+    <string name="senflexp_connected">SenFlexP:  </string>
     <string name="no">No</string>
     <string name="time_left">Time Left:</string>
     <string name="instruction">Instruction:</string>
@@ -39,7 +39,7 @@
     <string name="pour_drops_of_water">Pour Drops of Water.</string>
     <string name="do_nothing">Do Nothing</string>
     <string name="pour_drops_of_sample">Pour Drops of Sample</string>
-    <string name="pulseoximeter_connected">Pulse Oximeter:</string>
+    <string name="pulseoximeter_connected">iOxy:</string>
     <string name="sendind_data_to_server">Sendind Data to Server</string>
     <string name="scanning">Scanning.</string>
     <string name="scanning_failed">Scanning Failed.</string>
@@ -91,6 +91,7 @@
     <string name="last_sample_id">Last Sample ID</string>
     <string name="sample_collection_date">Sample Collection Date</string>
     <string name="sample_collection_time">Sample Collection Time</string>
+    <string name="stop_study">Stop Study</string>
 
     <string-array name="gender">
         <item>Select Sex</item>

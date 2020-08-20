@@ -22,7 +22,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="0.1"/>
 
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="@dimen/_25sdp"
@@ -46,24 +46,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"/>
-
-        <TextView
-            android:id="@+id/test_id"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="wrap_content"
-            android:text="Test ID: 004"
-            android:textColor="@color/lightBlue"
-            android:layout_marginEnd="@dimen/_25sdp"
-            android:layout_marginStart="@dimen/_3sdp"
-            android:textSize="@dimen/_15sdp"
-            android:gravity="start"
-            android:textStyle="bold"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5"/>
+            android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/batteryImage"
@@ -74,41 +57,73 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2.2"/>
+            android:layout_weight="0.1"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/_10sdp">
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:gravity="start"
             android:text="@string/senflexp_connected"
             android:textColor="@color/lightBlue"
             android:textSize="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:textStyle="bold"
-            android:gravity="start"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/connection_status_senflex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="start"
             android:text="@string/disconnected"
             android:textColor="@color/red"
             android:textSize="@dimen/_12sdp"
-            android:textStyle="bold"
-            android:gravity="start"/>
+            android:textStyle="bold" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1.5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:text="@string/pulseoximeter_connected"
+            android:textColor="@color/lightBlue"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/connection_status_pulse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:gravity="start"
+            android:text="@string/disconnected"
+            android:textColor="@color/red"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="9dp"
+            android:layout_weight="0.1" />
 
     </LinearLayout>
 
@@ -117,6 +132,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_150sdp"/>
 
+    <!--
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_50sdp"
@@ -137,7 +153,7 @@
             android:id="@+id/timer"
             android:layout_width="@dimen/_45sdp"
             android:layout_height="wrap_content"
-            android:text="--s"
+            android:text="s"
             android:textColor="@color/lightGreen"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold"/>
@@ -164,6 +180,7 @@
             android:layout_weight="1" />
 
     </LinearLayout>
+    -->
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -352,21 +369,19 @@
                 <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5"/>
+                    android:layout_weight="0.3"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <com.airbnb.lottie.LottieAnimationView
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:layout_marginBottom="@dimen/_2sdp"
-                        app:srcCompat="@drawable/pulse_oxi"/>
+                        app:lottie_rawRes="@raw/test_id"
+                        app:lottie_loop="true"
+                        app:lottie_autoPlay="true"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -376,23 +391,22 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@string/test_id"
+                            android:layout_marginEnd="@dimen/_25sdp"
                             android:layout_marginStart="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:layout_marginEnd="@dimen/_3sdp"
-                            android:layout_marginBottom="@dimen/_2sdp"
-                            android:text="@string/pulseoximeter_connected"
-                            android:textColor="@color/lightGreen" />
+                            android:gravity="start"
+                            android:textColor="@color/lightGreen"/>
 
                         <TextView
-                            android:id="@+id/connection_status_pulse"
+                            android:id="@+id/test_id"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/disconnected"
-                            android:textColor="@color/red"
+                            android:text="--"
+                            android:textColor="@color/lightGreen"
+                            android:layout_marginEnd="@dimen/_25sdp"
                             android:layout_marginStart="@dimen/_3sdp"
-                            android:textSize="@dimen/_12sdp"
-                            android:textStyle="bold"
-                            android:gravity="start"/>
+                            android:gravity="start"
+                            android:textStyle="bold"/>
 
                     </LinearLayout>
 
@@ -409,17 +423,53 @@
 
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/start_button"
-        android:text="@string/start_study"
-        android:textSize="@dimen/_12sdp"
-        android:textColor="@color/white"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_5sdp"/>
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/start_button"
+            android:text="@string/start_study"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/stop_button"
+            android:text="@string/stop_study"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
 </LinearLayout>

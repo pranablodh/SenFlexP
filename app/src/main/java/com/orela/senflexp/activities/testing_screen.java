@@ -66,8 +66,8 @@ import static com.orela.senflexp.activities.login.REQUEST_CHECK_SETTINGS;
 public class testing_screen extends AppCompatActivity
 {
 
-    private TextView timer;
-    private TextView instruction;
+    //private TextView timer;
+    //private TextView instruction;
     private TextView temperature;
     private TextView connection_status_senflex;
     private TextView connection_status_pulse;
@@ -78,6 +78,7 @@ public class testing_screen extends AppCompatActivity
     private ImageView batteryImage;
     private CardView cardView;
     private Button start;
+    private Button stop;
     private LineChart chart;
 
     private static final String SHOWCASE_ID = "Test Screen";
@@ -143,8 +144,8 @@ public class testing_screen extends AppCompatActivity
         actionBar.hide();
 
         //UI Elements
-        timer = (TextView) findViewById(R.id.timer);
-        instruction = (TextView) findViewById(R.id.instruction);
+        //timer = (TextView) findViewById(R.id.timer);
+        //instruction = (TextView) findViewById(R.id.instruction);
         temperature = (TextView) findViewById(R.id.temperature);
         connection_status_senflex = (TextView) findViewById(R.id.connection_status_senflex);
         connection_status_pulse = (TextView) findViewById(R.id.connection_status_pulse);
@@ -153,6 +154,7 @@ public class testing_screen extends AppCompatActivity
         perfusion_index = (TextView) findViewById(R.id.perfusion_index);
         test_id = (TextView) findViewById(R.id.test_id);
         start = (Button) findViewById(R.id.start);
+        stop = (Button) findViewById(R.id.stop);
         chart = (LineChart) findViewById(R.id.chart);
         batteryImage = (ImageView) findViewById(R.id.batteryImage);
         cardView = (CardView) findViewById(R.id.cardView);
@@ -162,7 +164,7 @@ public class testing_screen extends AppCompatActivity
         enableBluetooth();
 
         Intent intent = getIntent();
-        test_id.setText(String.format("Test ID: %s", intent.getStringExtra("test_id")));
+        test_id.setText(intent.getStringExtra("test_id"));
         senflex_file = intent.getStringExtra("senflex");
         ioxy_file = intent.getStringExtra("ioxy");
 
@@ -187,6 +189,16 @@ public class testing_screen extends AppCompatActivity
                     scan_for_senflex();
                     scan_for_bpl_ioxy();
                 }
+            }
+        });
+
+        stop.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                disconnectBLE();
+                go_to_submit_result();
             }
         });
 
@@ -380,8 +392,8 @@ public class testing_screen extends AppCompatActivity
         sequence.addSequenceItem(batteryImage, "SelFlexP Battery Level Indicator.", "Got It");
         sequence.addSequenceItem(connection_status_senflex, "SelFlexP Connection Status Indicator.", "Got It");
         sequence.addSequenceItem(chart, "Test Data Plotting Area.", "Got It");
-        sequence.addSequenceItem(timer, "Test Duration Indicator.", "Got It");
-        sequence.addSequenceItem(instruction, "Test Guidance Will Appear Here.", "Got It");
+        //sequence.addSequenceItem(timer, "Test Duration Indicator.", "Got It");
+        //sequence.addSequenceItem(instruction, "Test Guidance Will Appear Here.", "Got It");
         sequence.addSequenceItem(cardView, "Test Parameter Will Be Shown Here.", "Got It");
         sequence.addSequenceItem(connection_status_pulse, "PulseOximeter Connection Status Indicator.", "Got It");
         sequence.addSequenceItem(start, "Press Here to Begin The Test.", "Got It");
@@ -491,7 +503,7 @@ public class testing_screen extends AppCompatActivity
                             {
                                 connection_status_senflex.setText(R.string.connected);
                                 connection_status_senflex.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
-                                countdown_timer();
+                                //countdown_timer();
                             }
 
                             else
@@ -567,7 +579,7 @@ public class testing_screen extends AppCompatActivity
                         public void run()
                         {
                             plotData = true;
-                            mpPlotClass.addEntry((float) (((double) bleDataParser.rawBleDataConversion(character.getValue())) * 0.003),
+                            mpPlotClass.addEntry((float) (((double) bleDataParser.rawBleDataConversion(character.getValue())) * 0.012),
                             chart, 100,"Sensor Data",Color.RED, false);
                             fileWriter.write(senflex_file, String.valueOf(bleDataParser.rawBleDataConversion(character.getValue())), testing_screen.this);
                             plotData = false;
@@ -793,95 +805,99 @@ public class testing_screen extends AppCompatActivity
         bluetoothGatt.writeDescriptor(descriptor);
     }
 
-    private void countdown_timer()
+//    private void countdown_timer()
+//    {
+//        new CountDownTimer(400000, 1000)
+//        {
+//            @Override
+//            public void onTick(final long millisUntilFinished)
+//            {
+//                final long count = (400000 - millisUntilFinished) / 1000;
+//                runOnUiThread(new Runnable()
+//                {
+//                    @Override
+//                    public void run()
+//                    {
+//                        timer.setText(String.format("%s", String.valueOf(count) + 's'));
+//                        if(count <= 20)
+//                        {
+//                            instruction.setText(R.string.pour_drops_of_water);
+//                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
+//                            if(soundService)
+//                            {
+//                                soundService = false;
+//                                startService(new Intent(testing_screen.this, beepSound.class));
+//                            }
+//                        }
+//
+//                        else if(count <= 170)
+//                        {
+//                            instruction.setText(R.string.do_nothing);
+//                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
+//                            if(!soundService)
+//                            {
+//                                soundService = true;
+//                                stopService(new Intent(testing_screen.this, beepSound.class));
+//                            }
+//                        }
+//
+//                        else if(count <= 190)
+//                        {
+//                            instruction.setText(R.string.pour_drops_of_sample);
+//                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
+//                            if(soundService)
+//                            {
+//                                soundService = false;
+//                                startService(new Intent(testing_screen.this, beepSound.class));
+//                            }
+//                        }
+//
+//                        else
+//                        {
+//                            instruction.setText(R.string.do_nothing);
+//                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
+//                            if(!soundService)
+//                            {
+//                                soundService = true;
+//                                stopService(new Intent(testing_screen.this, beepSound.class));
+//                            }
+//                        }
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onFinish()
+//            {
+//                timer.setText(R.string.o_s_time);
+//                disconnectBLE();
+//                go_to_submit_result();
+//            }
+//        }.start();
+//    }
+
+    private void disconnectBLE()
     {
-        new CountDownTimer(400000, 1000)
+        if(SenFlexGatt != null && bluetoothAdapter != null)
         {
-            @Override
-            public void onTick(final long millisUntilFinished)
-            {
-                final long count = (400000 - millisUntilFinished) / 1000;
-                runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        timer.setText(String.format("%s", String.valueOf(count) + 's'));
-                        if(count <= 20)
-                        {
-                            instruction.setText(R.string.pour_drops_of_water);
-                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
-                            if(soundService)
-                            {
-                                soundService = false;
-                                startService(new Intent(testing_screen.this, beepSound.class));
-                            }
-                        }
+            SenFlexGatt.close();
+            SenFlexGatt = null;
+            connection_status_senflex.setText(R.string.disconnected);
+            connection_status_senflex.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
+        }
 
-                        else if(count <= 170)
-                        {
-                            instruction.setText(R.string.do_nothing);
-                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
-                            if(!soundService)
-                            {
-                                soundService = true;
-                                stopService(new Intent(testing_screen.this, beepSound.class));
-                            }
-                        }
+        if(PulseoximeterGatt != null && bluetoothAdapter != null)
+        {
+            PulseoximeterGatt.close();
+            PulseoximeterGatt = null;
+            connection_status_pulse.setText(R.string.disconnected);
+            connection_status_pulse.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
+        }
 
-                        else if(count <= 190)
-                        {
-                            instruction.setText(R.string.pour_drops_of_sample);
-                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
-                            if(soundService)
-                            {
-                                soundService = false;
-                                startService(new Intent(testing_screen.this, beepSound.class));
-                            }
-                        }
-
-                        else
-                        {
-                            instruction.setText(R.string.do_nothing);
-                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
-                            if(!soundService)
-                            {
-                                soundService = true;
-                                stopService(new Intent(testing_screen.this, beepSound.class));
-                            }
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void onFinish()
-            {
-                timer.setText(R.string.o_s_time);
-                if(SenFlexGatt != null && bluetoothAdapter != null)
-                {
-                    SenFlexGatt.close();
-                    SenFlexGatt = null;
-                    connection_status_senflex.setText(R.string.disconnected);
-                    connection_status_senflex.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
-                }
-
-                if(PulseoximeterGatt != null && bluetoothAdapter != null)
-                {
-                    PulseoximeterGatt.close();
-                    PulseoximeterGatt = null;
-                    connection_status_pulse.setText(R.string.disconnected);
-                    connection_status_pulse.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
-                }
-
-                assert bluetoothAdapter != null;
-                if(bluetoothAdapter.isEnabled())
-                {
-                    bluetoothAdapter.disable();
-                }
-
-                go_to_submit_result();
-            }
-        }.start();
+        assert bluetoothAdapter != null;
+        if(bluetoothAdapter.isEnabled())
+        {
+            bluetoothAdapter.disable();
+        }
     }
 }
