@@ -94,7 +94,7 @@ public class myDetails extends AppCompatActivity
         pinCode = (TextView) findViewById(R.id.pinCode);
         addressType = (TextView) findViewById(R.id.addressType);
 
-        show_show_case_view();
+        //show_show_case_view();
 
         back.setOnClickListener(new View.OnClickListener()
         {

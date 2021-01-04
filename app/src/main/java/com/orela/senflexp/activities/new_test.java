@@ -144,7 +144,7 @@ public class new_test extends AppCompatActivity
         mobile = (EditText) findViewById(R.id.mobile);
         email = (EditText) findViewById(R.id.email);
 
-        show_show_case_view();
+        //show_show_case_view();
 
         //On Click Listener
         next.setOnClickListener(new View.OnClickListener()

@@ -66,8 +66,8 @@ import static com.orela.senflexp.activities.login.REQUEST_CHECK_SETTINGS;
 public class testing_screen extends AppCompatActivity
 {
 
-    //private TextView timer;
-    //private TextView instruction;
+    private TextView timer;
+    private TextView instruction;
     private TextView temperature;
     private TextView connection_status_senflex;
     private TextView connection_status_pulse;
@@ -144,8 +144,8 @@ public class testing_screen extends AppCompatActivity
         actionBar.hide();
 
         //UI Elements
-        //timer = (TextView) findViewById(R.id.timer);
-        //instruction = (TextView) findViewById(R.id.instruction);
+        timer = (TextView) findViewById(R.id.timer);
+        instruction = (TextView) findViewById(R.id.instruction);
         temperature = (TextView) findViewById(R.id.temperature);
         connection_status_senflex = (TextView) findViewById(R.id.connection_status_senflex);
         connection_status_pulse = (TextView) findViewById(R.id.connection_status_pulse);
@@ -159,7 +159,7 @@ public class testing_screen extends AppCompatActivity
         batteryImage = (ImageView) findViewById(R.id.batteryImage);
         cardView = (CardView) findViewById(R.id.cardView);
 
-        show_show_case_view();
+        //show_show_case_view();
         checkingPermission();
         enableBluetooth();
 
@@ -503,7 +503,7 @@ public class testing_screen extends AppCompatActivity
                             {
                                 connection_status_senflex.setText(R.string.connected);
                                 connection_status_senflex.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
-                                //countdown_timer();
+                                countdown_timer();
                             }
 
                             else
@@ -805,76 +805,87 @@ public class testing_screen extends AppCompatActivity
         bluetoothGatt.writeDescriptor(descriptor);
     }
 
-//    private void countdown_timer()
-//    {
-//        new CountDownTimer(400000, 1000)
-//        {
-//            @Override
-//            public void onTick(final long millisUntilFinished)
-//            {
-//                final long count = (400000 - millisUntilFinished) / 1000;
-//                runOnUiThread(new Runnable()
-//                {
-//                    @Override
-//                    public void run()
-//                    {
-//                        timer.setText(String.format("%s", String.valueOf(count) + 's'));
-//                        if(count <= 20)
-//                        {
-//                            instruction.setText(R.string.pour_drops_of_water);
-//                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
-//                            if(soundService)
-//                            {
-//                                soundService = false;
-//                                startService(new Intent(testing_screen.this, beepSound.class));
-//                            }
-//                        }
-//
-//                        else if(count <= 170)
-//                        {
-//                            instruction.setText(R.string.do_nothing);
-//                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
-//                            if(!soundService)
-//                            {
-//                                soundService = true;
-//                                stopService(new Intent(testing_screen.this, beepSound.class));
-//                            }
-//                        }
-//
-//                        else if(count <= 190)
-//                        {
-//                            instruction.setText(R.string.pour_drops_of_sample);
-//                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
-//                            if(soundService)
-//                            {
-//                                soundService = false;
-//                                startService(new Intent(testing_screen.this, beepSound.class));
-//                            }
-//                        }
-//
-//                        else
-//                        {
-//                            instruction.setText(R.string.do_nothing);
-//                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
-//                            if(!soundService)
-//                            {
-//                                soundService = true;
-//                                stopService(new Intent(testing_screen.this, beepSound.class));
-//                            }
-//                        }
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onFinish()
-//            {
-//                timer.setText(R.string.o_s_time);
-//                disconnectBLE();
-//                go_to_submit_result();
-//            }
-//        }.start();
-//    }
+    private void countdown_timer()
+    {
+        new CountDownTimer(400000000, 1000)
+        {
+            @Override
+            public void onTick(final long millisUntilFinished)
+            {
+                final long count = (400000000 - millisUntilFinished) / 1000;
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        timer.setText(String.format("%s", String.valueOf(count) + 's'));
+                        if(count <= 20)
+                        {
+                            instruction.setText(R.string.pour_drops_of_water);
+                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
+                            if(soundService)
+                            {
+                                soundService = false;
+                                startService(new Intent(testing_screen.this, beepSound.class));
+                            }
+                        }
+
+                        else if(count <= 100)
+                        {
+                            instruction.setText(R.string.do_nothing);
+                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
+                            if(!soundService)
+                            {
+                                soundService = true;
+                                stopService(new Intent(testing_screen.this, beepSound.class));
+                            }
+                        }
+
+                        else if(count <= 120)
+                        {
+                            instruction.setText(R.string.pour_drops_of_sample);
+                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.lightGreen));
+                            if(soundService)
+                            {
+                                soundService = false;
+                                startService(new Intent(testing_screen.this, beepSound.class));
+                            }
+                        }
+
+                        else if(count <= 140)
+                        {
+                            instruction.setText(R.string.do_nothing);
+                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
+                            if(!soundService)
+                            {
+                                soundService = true;
+                                stopService(new Intent(testing_screen.this, beepSound.class));
+                            }
+                        }
+
+                        else
+                        {
+                            instruction.setText(R.string.you_may_submit);
+                            instruction.setTextColor(ContextCompat.getColor(testing_screen.this, R.color.red));
+                            if(!soundService)
+                            {
+                                soundService = true;
+                                stopService(new Intent(testing_screen.this, beepSound.class));
+                            }
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onFinish()
+            {
+                timer.setText(R.string.o_s_time);
+                //disconnectBLE();
+                //go_to_submit_result();
+            }
+        }.start();
+    }
 
     private void disconnectBLE()
     {

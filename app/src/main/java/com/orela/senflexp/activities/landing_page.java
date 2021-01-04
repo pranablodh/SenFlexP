@@ -59,7 +59,7 @@ public class landing_page extends AppCompatActivity
         my_profile = (CardView) findViewById(R.id.my_profile);
         logout = (CardView) findViewById(R.id.logout);
 
-        show_show_case_view();
+        //show_show_case_view();
 
         //On Click Listener
         new_test.setOnClickListener(new View.OnClickListener()

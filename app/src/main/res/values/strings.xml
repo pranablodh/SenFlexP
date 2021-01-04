@@ -92,6 +92,7 @@
     <string name="sample_collection_date">Sample Collection Date</string>
     <string name="sample_collection_time">Sample Collection Time</string>
     <string name="stop_study">Stop Study</string>
+    <string name="you_may_submit">You May Submit</string>
 
     <string-array name="gender">
         <item>Select Sex</item>

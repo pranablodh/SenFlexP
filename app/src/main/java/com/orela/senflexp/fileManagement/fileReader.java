@@ -25,7 +25,7 @@ public class fileReader
                 text.append("\n");
             }
             br.close();
-            //Log.d("file_###", text.toString());
+            Log.d("file_###", text.toString());
             return  text.toString();
         }
 
